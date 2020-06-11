@@ -1,0 +1,218 @@
+﻿@model ControlCalidad.Models.Proyecto
+@* {
+        ViewBag.Title = "Create";
+    }
+*@
+
+@{
+    List<SelectListItem> clientsId = ( List<SelectListItem> ) ViewBag.allClientsId;
+    List<SelectListItem> leaders = ( List<SelectListItem> ) ViewBag.leaders;
+
+
+    <div id="btn-add" class="fixed-action-btn">
+        <a href="@Url.Action("Index", "Project/Index")" class="btn-floating btn-large black turq-hover left tooltipped" data-position="left" data-tooltip="Volver">
+            <i class="large material-icons">arrow_back</i>
+        </a>
+    </div>
+
+    if( User.IsInRole( "Jefe" ) )
+    {
+        <h3 class="text-grey">Crear nuevo proyecto</h3>
+        <div class="margin-b1">
+            <hr />
+        </div>
+
+
+        <div class="row container">
+            <div class="">
+                <div class="card hoverable">
+                    <nav>
+                        <div class="nav-wrapper black">
+                            <p class="col s4">Quality Expert S.A</p>
+                        </div>
+                    </nav>
+                    <div class="margin-b">
+
+                    </div>
+                    @using( Html.BeginForm( "Create" , "Project" , FormMethod.Post , new {
+                        @onsubmit = "onSubmit()"
+                    } ) )
+                    {
+                        <div class="margin-b section">
+
+                        </div>
+
+                        @Html.AntiForgeryToken( )
+
+                        <div class="row">
+                            <div class="col s4">
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size text-grey material-icons prefix">assignment_ind</i>
+                                        <label for="nombre">Nombre del proyecto <span class="red-text">  *</span></label>
+                                        <input name="nombre" type="text" required class="validate form-control" onblur="validateProjectName()" onkeyup="validateProjectName()" id="projectName" />
+                                        <span class="text-error" id="nameError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">person</i>
+                                        @Html.DropDownList("cedulaClienteFK", clientsId, "Seleccione un cliente", new
+                                        {
+                                       @class = "validate form-control",
+                                            @id = "clientId",
+                                       onchange = "validateClient(clientId)",
+                                       required = "required"
+                                   })
+                                        <label for="clientId">Cliente del proyecto <span class="red-text">  *</span></label>
+                                        <span class="text-error" id="ClientError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">date_range</i>
+                                        <label for="fechaFin">Fecha de Finalización</label>
+                                        <input type="text" disabled class="datepickerDate datepicker" id="fechaFin" name="fechaFin" />
+                                        @Html.ValidationMessageFor(model => model.fechaFin, "", new { @class = "text-error" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col s4">
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">assignment</i>
+                                        @Html.LabelFor(model => model.objetivo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.EditorFor(model => model.objetivo, new { htmlAttributes = new { @class = "validate" } })
+                                        @Html.ValidationMessageFor(model => model.objetivo, "", new { @class = "text-error" })
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">person</i>
+                                        @Html.DropDownList("cedula_empleadoFK", leaders, "Selecciona el líder", new
+                                        {
+                                            @class = "validate form-control",
+                                            @id = "leader"
+                                        })
+                                        <label for="leader">Lider del proyecto</label>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">hourglass_empty</i>
+                                        <label for="duracionEstimada">Duración Estimada <span class="red-text">  *</span> </label>
+                                        <input name="duracionEstimada" type="number" required class="validate form-control" onblur="validateDuration()" onkeyup="validateDuration()" id="avrDuration" />
+                                        <span class="text-error" id="avrDurationError"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col s4">
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11" data-target="dropdownCreate">
+                                        <i class="p-size material-icons text-grey prefix">info</i>
+                                        <select name="estado" required id="status">
+                                            <option value="Inactivo">Inactivo</option>
+                                            <option value="Activo">Activo</option>
+                                            <option value="Finalizado">Finalizado</option>
+                                            <option value="Cancelado">Cancelado</option>
+                                        </select>
+                                        <label for="status">Estado del proyecto <span class="red-text">  *</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">date_range</i>
+                                        <label for="fechaInicio">Fecha de Inicio <span class="red-text">  *</span></label>
+                                        <input type="text" class="datepickerDate datepicker validate form-control " id="fechaInicio" name="fechaInicio" required onchange="validateDateP()" onblur="validateDateP()"  />
+                                        <span class="text-error" id="dateErrorMessage"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">hourglass_full</i>
+                                        <input name="duracionReal" type="number" disabled class="validate form-control" id="realDuration" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="hide row container center" id="loading">
+                            <div class="">
+                                <i class="material-icons text-turq ">info_outline</i>
+                            </div>
+                            <div class="">
+                                <p class="text-turq">
+                                    Creando... Por favor espere.
+                                </p>
+                            </div>
+
+                            <div class="progress">
+                                <div class="indeterminate"></div>
+                            </div>
+                        </div>
+
+                        <div class=" row container center hide " id="complete">
+                            <div class="">
+                                <i class="material-icons text-turq ">info_outline</i>
+                            </div>
+                            <div class="">
+                                <p class="text-turq">
+                                    Se creó correctamente.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="margin-required">
+                            <p class="text-error">
+                                Los campos con * son requeridos.
+                            </p>
+                        </div>
+
+                        <div class="margin-b1">
+                        </div>
+
+                        <div class="row center">
+                            <button id="btn-delete" type="reset" class="margin-r waves-effect red-hover btn red accent-4">Cancelar</button>
+
+                            <button id="btn-submit" type="submit" class="margin-l btn waves-effect waves-light turq btn-login modal-trigger">Crear</button>
+
+                        </div>
+                        <div class="margin-b section">
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+    }
+    else
+    {
+        <div class="row container center top-m-block">
+
+            <div class="card hoverable s10 section">
+
+                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para crear un proyecto.</h3>
+                <i class="large material-icons red-text">block</i>
+
+            </div>
+        </div>
+    }
+
+
+}
+
+@section Scripts {
+    @Scripts.Render( "~/bundles/jqueryval" )
+}

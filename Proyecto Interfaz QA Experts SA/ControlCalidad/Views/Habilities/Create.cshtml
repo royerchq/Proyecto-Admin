@@ -1,0 +1,141 @@
+﻿@model ControlCalidad.Models.Habilidade
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h3 class="text-grey">Registrar Habilidad</h3>
+
+
+<div class="row container">
+    <div class="col s8 offset-s2">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper black">
+                    <p class="col s4">Quality experto S.A</p>
+                </div>
+            </nav>
+            <div class="margin-b section">
+            </div>
+            @using (Html.BeginForm("Create", "Habilities", FormMethod.Post, new
+            {
+                @class = "",
+                role = "form"
+            }))
+            {
+
+                <h5 class="text-grey col s10 offset-s3">Registrar nueva habilidad para @ViewBag.employeeName</h5>
+                @Html.AntiForgeryToken()
+                <div class="row margin-b" style="display: none;">
+
+            <i class=" text-grey col s1 offset-s3 material-icons prefix">perm_identity</i>
+
+            <div class="input-field col s5" >
+                <div class="col-md-10">
+                    <input id="cedula_empleadoFK" name="cedula_empleadoFK" value="@ViewBag.cedulaCreate" type="text" readonly />
+                    @Html.ValidationMessageFor(model => model.cedula_empleadoFK, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+                <div class="row center">
+
+                    <i class=" text-grey col s1 offset-s3 material-icons prefix">description</i>
+
+                    <div class="input-field col s5">
+                        @Html.ValidationMessageFor(m => m.descripcionPK, null, new
+                        {
+                       @class = "text-error"
+                   })
+                        <select id="categoriaPK" name="categoriaPK" class="autocomplete" onchange="habilidades(this);">
+                            <option value="">Seleccione una opción</option>
+                            <option value="Técnica">Técnica</option>
+                            <option value="Blanda">Blanda</option>
+                        </select>
+                        <label for="descripcionPK">Categoria</label>
+                    </div>
+                </div>
+
+                <div  id="respuesta">
+
+                </div>
+
+
+                <div class="row center">
+                    @Html.ActionLink("Cancelar", "Index", new { cedula_empleadoFK = ViewBag.cedulaCreate }, new
+               {
+                   @class = "waves-effect red-hover btn red accent-4"
+               })
+                    <button type="submit" class="btn waves-effect waves-light turq btn-login modal-trigger">Aceptar</button>
+
+
+                </div>
+                <div class="margin-b section">
+                </div>
+
+            }
+        </div>
+    </div>
+
+</div>
+
+
+
+<script>
+
+function habilidades (input) {
+    if (input.selectedIndex == 1) {
+        respuesta = document.getElementById('respuesta');
+        respuesta.innerHTML = `<div class="row margin-b">
+
+                <i class="text-grey col s1 offset-s3 material-icons prefix">work</i>
+
+                <div class="input-field col s5">
+                    <select id="descripcionPK" name="descripcionPK">
+
+                        <option value="Java(principiante)">Java(principiante)</option>
+                        <option value="Java(intermedio)">Java(intermedio)</option>
+                        <option value="Java(experto)">Java(experto)</option>
+                        <option value="Python(principiante)">Python(principiante)</option>
+                        <option value="Python(intermedio)">Python(intermedio)</option>
+                        <option value="Python(experto)">Python(experto)</option>
+                        <option value="Bootstrap">Bootstrap</option>
+                        <option value="SASS">SASS</option>
+                        <option value="ASP .NET">ASP .NET</option>
+                        <option value="C++(principiante)">C++(principiante)</option>
+                        <option value="C++(intermedio)">C++(intermedio)</option>
+                        <option value="C++(experto)">C++(experto)</option>
+                        <option value="Scrum">Scrum</option>
+                        <option value="Agile">Agile</option>
+                    </select>
+                    </select>
+                    <label for="descripcionPK">Descripcion</label>
+                </div>
+            </div>`;
+        $('select').formSelect();
+    }
+    if (input.selectedIndex == 2) {
+        respuesta = document.getElementById('respuesta');
+        respuesta.innerHTML = `<div class="row margin-b">
+
+                <i class="text-grey col s1 offset-s3 material-icons prefix">work</i>
+
+                <div class="input-field col s5">
+                    <select id="descripcionPK" name="descripcionPK">
+
+                        <option value="Liderazgo">Liderazgo</option>
+                        <option value="Orden y Calidad">Orden y Calidad</option>
+                        <option value="Sensibilidad Interpersonal">Sensibilidad Interpersonal</option>
+                        <option value="Responsabilidad">Responsabilidad</option>
+                        <option value="Capacidad para resolver problemas">Capacidad para resolver problemas</option>
+                        <option value="Inteligencia emocional">Inteligencia emocional</option>
+
+                    </select>
+                    <label for="descripcionPK">Descripcion</label>
+                </div>
+            </div>`;
+        $('select').formSelect();
+    }
+}
+
+</script>

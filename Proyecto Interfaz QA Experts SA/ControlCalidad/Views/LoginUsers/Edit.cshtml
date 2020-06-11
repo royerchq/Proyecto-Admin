@@ -1,0 +1,149 @@
+﻿@model ControlCalidad.Models.AspNetUser
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h3 class="text-grey">Editar Usuario</h3>
+<div class="margin-b1">
+    <hr />
+</div>
+
+<div class="row container ">
+    <div class="col s8 offset-s2">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper black">
+                    <p class="col s4">Quality Expert S.A</p>
+                </div>
+            </nav>
+            <div class="margin-b section">
+
+            </div>
+
+            @using( Html.BeginForm( "Edit" ,"LoginUsers" , FormMethod.Post , new {
+                @onsubmit = "onSubmit()"}) )
+            {
+
+                @Html.AntiForgeryToken( )
+
+
+                @Html.ValidationSummary(true, "", new { @class = "red-text" })
+                @Html.HiddenFor( model => model.Id )
+
+
+                <div class="row margin-b">
+                    <div class="input-field col s6 offset-s3">
+                        <i class="p-size text-grey material-icons prefix">mail</i>
+                        @Html.TextBoxFor( model => model.UserName , new {
+                       @class = "validate form control"
+                   } )
+                        @Html.LabelFor( model => model.Email , new {
+                       @class = ""
+                   } )
+                        @Html.ValidationMessageFor( model => model.UserName , null , new {
+                       @class = "text-error"
+                   } )
+
+                    </div>
+                </div>
+
+                <div class="row margin-b hide">
+                    <div class="input-field col s6 offset-s3">
+                        <i class="p-size text-grey material-icons prefix">mail</i>
+                        @Html.TextBoxFor( model => model.Email , new {
+                       @class = "validate"
+                   } )
+                        @Html.LabelFor( model => model.Email , new {
+                       @class = ""
+                   } )
+                        @Html.ValidationMessageFor( model => model.Email , null , new {
+                       @class = "text-error"
+                   } )
+
+                    </div>
+                </div>
+
+                <div class="row margin-b">
+                    <i class=" small text-grey col s1 offset-s3 material-icons prefix">work</i>
+                    <div class="input-field col s5">
+                        @Html.ValidationMessageFor( model => model.Role , null , new {
+                       @class = "text-error"
+                   } )
+                        <select id="Role" name="Role">
+                            <option value="Jefe">Jefe</option>
+                            <option value="Lider">Lider</option>
+                            <option value="Tester">Tester</option>
+                            <option value="Cliente">Cliente</option>
+                        </select>
+                        <label for="Role">Selecciona el rol</label>
+                    </div>
+                </div>
+
+                <div class="row margin-b hide">
+                    <div class="input-field col s6 offset-s3">
+                        @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "" } })
+                        @Html.LabelFor(model => model.PasswordHash, htmlAttributes: new { @class = "" })
+                        @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "" })
+                    </div>
+                </div>
+
+                <div class=" hide row margin-b">
+                    <div class="input-field col s6 offset-s3">
+                        @Html.EditorFor(model => model.SecurityStamp, new { htmlAttributes = new { @class = "disabled" } })
+                        @Html.LabelFor(model => model.SecurityStamp, htmlAttributes: new { @class = "" })
+                        @Html.ValidationMessageFor(model => model.SecurityStamp, "", new { @class = "" })
+                    </div>
+                </div>
+
+                <div class="hide row container center" id="loading">
+                    <div class="">
+                        <i class="material-icons text-turq ">info_outline</i>
+                    </div>
+                    <div class="">
+                        <p class="text-turq">
+                            Editando... Por favor espere.
+                        </p>
+                    </div>
+
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+
+                <div class=" row container center hide " id="complete">
+                    <div class="">
+                        <i class="material-icons text-turq ">info_outline</i>
+                    </div>
+                    <div class="">
+                        <p class="text-turq">
+                            Se edito correctamente.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="margin-b1">
+                </div>
+
+
+                <div class="row center">
+                    @Html.ActionLink("Cancelar", "Details", new { id=Model.Id }, new {
+                   @class = "margin-r waves-effect red-hover btn red accent-4"
+               } )
+                    <button type="submit" value="Save" class="margin-l btn waves-effect waves-light turq white-text">Aceptar</button>
+                </div>
+
+                <div class="margin-b section">
+
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render( "~/bundles/jqueryval" )
+}

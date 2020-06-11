@@ -1,0 +1,206 @@
+﻿@model ControlCalidad.Models.Requerimiento
+
+@*{
+        ViewBag.Title = "Details";
+    }*@
+
+@{
+
+    string assignDate = ViewBag.fechaAsignacion;
+    string endDate = ViewBag.fechaFin;
+    string beginDate = ViewBag.fechaInicio;
+
+}
+<h3 class="text-grey"> Detalles del requerimiento </h3>
+<div class="margin-b1">
+    <hr />
+</div>
+<div>
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <div class="card hoverable">
+                <nav>
+                    <div class="nav-wrapper black">
+                        <p class="col s4"> Quality Expert S.A</p>
+                    </div>
+                </nav>
+                <div class="card-content black-text">
+                    <div class="row">
+
+                        <div class="hide">
+                            <input id="idRequerimiento" type="text" value="@Model.idPK" />
+                        </div>
+
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">person</i>
+                                <span class="text-turq"> Nombre del proyecto </span>
+                                : @Html.DisplayFor( model => model.Proyecto.nombre )
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">person</i>
+                                <span class="text-turq"> Nombre del requerimiento </span>
+                                : @Html.DisplayFor( model => model.nombre )
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">person</i>
+                                <span class="text-turq"> Tester asignado </span>
+                                : @ViewBag.tester
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">assignment</i>
+                                <span class="text-turq"> Descripción </span>
+                                : @Html.DisplayFor( model => model.descripcion )
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">info</i>
+                                <span class="text-turq">Complejidad</span>
+                                : @Html.DisplayFor( model => model.complejidad )
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">date_range</i>
+                                <span class="text-turq">Fecha de inicio</span>
+                                : @Html.Name( beginDate )
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">date_range</i>
+                                <span class="text-turq">Fecha de asignacion</span>
+                                : @Html.Name( assignDate )
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">date_range</i>
+                                <span class="text-turq">Fecha de finalizacion</span>
+                                : @Html.Name( endDate )
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">hourglass_empty</i>
+                                <span class="text-turq">Duracion estimada</span>
+                                : @Html.DisplayFor( model => model.duracionEstimada )
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">hourglass_full</i>
+                                <span class="text-turq">Duracion real</span>
+                                : @Html.DisplayFor( model => model.duracionReal )
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">info</i>
+                                <span class="text-turq">Estado</span>
+                                : @Html.DisplayFor( model => model.estado )
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-action center">
+
+                        <a id="delete-btn" class="margin-r waves-effect btn red accent-4 red-hover modal-trigger" href="#modalProject">Borrar</a>
+                        @Html.ActionLink("Editar", "Edit", new { id = Model.idPK, projectId = Model.id_proyectoFK }, new
+                   {
+                       @class = "margin-l waves-effect waves-light btn turq",
+                            @id = "edit-btn"
+                   })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="btn-add" class="fixed-action-btn">
+    <a href="@Url.Action("Index", "Requirement/Index",new {projectId  = Model.id_proyectoFK})" class="btn-floating btn-large black turq-hover left tooltipped" data-position="left" data-tooltip="Volver">
+        <i class="large material-icons">arrow_back</i>
+    </a>
+</div>
+
+<!-- Modal Structure -->
+<div id="modalProject" class="modal">
+    <div class="row">
+        <div class="">
+            <nav>
+                <div class="nav-wrapper black">
+                    <p class="col s4 offset-s5">Quality Expert S.A</p>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="modal-content ">
+        <div class="row">
+            <div class="col s2">
+                <i class="material-icons medium red-text text-darken-4">warning</i>
+            </div>
+            <div class="s8">
+                <h5>Está seguro que desea <span class="red-text text-darken-4 "> borrar </span> el requerimiento @Model.nombre ?</h5>
+            </div>
+            <div class="left">
+                <span class="text-error" id="deleteError"></span>
+            </div>
+        </div>
+
+        <div class="margin-b1">
+        </div>
+
+        <div class="hide row container center" id="loading">
+            <div class="">
+                <i class="material-icons text-turq ">info_outline</i>
+            </div>
+            <div class="">
+                <p class="text-turq">
+                    Borrando... Por favor espere.
+                </p>
+            </div>
+
+            <div class="progress">
+                <div class="indeterminate"></div>
+            </div>
+        </div>
+
+        <div class="margin-b1">
+            <hr />
+        </div>
+
+        <div class="modal-footer">
+            <a class="modal-close btn red-hover  red accent-4 white-text">Cancelar</a>
+
+            <a onclick="deleteRequirement(@Model.idPK,@Model.id_proyectoFK)" class="waves-effect waves-effect waves-light btn turq">Aceptar</a>
+
+        </div>
+    </div>
+</div>
+
+@{
+    if( User.IsInRole( "Cliente" ) )
+    {
+        <script>
+            document.getElementById("delete-btn").classList.add("hide");
+            document.getElementById("edit-btn").classList.add("hide");
+        </script>
+    }
+    else if( User.IsInRole( "Tester" ) )
+    {
+        <script>
+            document.getElementById("delete-btn").classList.add("hide");
+        </script>
+    }
+}
+
+

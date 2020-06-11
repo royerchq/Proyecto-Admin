@@ -1,0 +1,1434 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@{
+
+
+    List<SelectListItem> projectsNames = (List<SelectListItem>)ViewBag.allprojects;
+    List<SelectListItem> testerNames = (List<SelectListItem>)ViewBag.alltesters;
+    List<SelectListItem> leaderNames = (List<SelectListItem>)ViewBag.allLeaders;
+    List<SelectListItem> finishedProjects = (List<SelectListItem>)ViewBag.finishedProjects;
+    List<SelectListItem> allTesters = (List<SelectListItem>)ViewBag.allTesters;
+    List<SelectListItem> habilitiesCategories = (List<SelectListItem>)ViewBag.habilitiesCategories;
+    List<SelectListItem> nameProjects = (List<SelectListItem>)ViewBag.allNameProjects;
+    List<SelectListItem> testiNames = (List<SelectListItem>)ViewBag.allNametesters;
+    
+
+
+
+    //Used to draw charts
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+    
+
+    if (User.IsInRole("Jefe") || User.IsInRole("Lider"))
+    {
+<div class="row">
+    <!-----------------------------------------------------Sección de botones--------------------------------------------------------------->
+    <div class="col s4">
+        <div class="card hoverable">
+
+            <nav>
+                <div class="nav-wrapper  black">
+                    <h5 class="col s4">Reportes</h5>
+                </div>
+            </nav>
+
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="col s11">
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover background-color:grey" name="answer" value="Total Requerimientos" onclick="showProjects1()" style="width: 350px;" />
+                            <hr id="barra1" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover background-color:grey" name="answer" value="Requerimientos terminados" onclick="showProjects2()" style="width: 350px;" />
+                            <hr size="50" id="barra2" style="display:none; border: 2px solid  teal; width:345px;" />
+
+                        </div>
+
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" name="answer" value="Requerimientos en ejecución" onclick="showProjects3()" style="width: 350px;" />
+                            <hr size="50" id="barra3" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" name="answer" value="Cantidad de requerimientos por tester" onclick="showProjects4()" style="width: 350px;" />
+                            <hr size="50" id="barra4" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" name="answer" value="Historial de participación" onclick="showProjects5()" style="width: 350px;" />
+                            <hr size="50" id="barra5" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+
+                        <div class="col s11 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" name="answer" value="Horas y requerimientos" onclick="showFishedProjectsReqHours()" style="width: 350px;" />
+                            <hr size="50" id="barra6" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" name="answer" value="Comparación líderes" onclick="showProjects7()" style="width: 350px;" />
+                            <hr size="50" id="barra7" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" name="answer" value="Resultado de pruebas" onclick="showProjects8()" style="width: 350px;" />
+                            <hr size="50" id="barra8" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" name="answer" value="Busqueda por habilidades" onclick="showHabilitiesQuery()" style="width: 350px;" />
+                            <hr size="50" id="barrah" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" value="Horas en requerimientos por tester" onclick="showTesterReqHours()" style="width: 350px;" />
+                            <hr size="50" id="testerReqHoursBar" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" value="Tester Disponibles" onclick="showProjects9()" style="width: 350px;" />
+                            <hr size="50" id="barra9" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" name="answer" value="Rendimiento de los lideres" onclick="showProjects10()" style="width: 350px;" />
+                            <hr size="50" id="barra10" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+                        <div class="col s12 margin-b1">
+                            <input type="button" class="black-text btn grey  turq-hover" name="answer" value="Rendimiento de los tester" onclick="showProjects11()" style="width: 350px;" />
+                            <hr size="50" id="barra11" style="display:none; border: 2px solid  teal; width:345px;" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-----------------------------------------------Sección de resultados---------------------------------------->
+    <!--------------Consulta 1: Total de requerimientos------------------------------------>
+    <div id="consulta1" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Total de requerimientos en un proyecto</h5>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+            <!------------------Consulta 2: Requerimientos terminados----------------->
+            <div id="consulta2" style="display:none;" class="col s8">
+                <div class="card hoverable">
+
+            <nav>
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Requerimientos terminados en un proyecto proyecto</h5>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="col s12 margin-b2">
+
+                                </div>
+                                <div class="col s12 margin-b2">
+                                    <div class="answer_list">
+                                        <div class="col s12 margin-b2">
+                                            <i class="p-size text-grey material-icons prefix">content_paste</i>
+                                            <label size="50">Proyecto </label>
+                                        </div>
+                                        <div class="col s5 margin-b2">
+                                            @Html.DropDownList("proy2", nameProjects, "Seleccione un proyecto", new { @onchange = "secondReport()" })
+                                        </div>
+                                        <br />
+                                        <div>
+                                            <table class="table striped ">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="center black white-text">
+                                                            Nombre
+                                                        </th>
+                                                        <th class="center black white-text">
+                                                            Estado
+                                                        </th>
+                                                        <th class="center black white-text">
+                                                            Complejidad
+                                                        </th>
+                                                        <th class="center black white-text">
+                                                            Responsable
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="table2" class="center"></tbody>
+                                            </table>
+                                        </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-----------------------Consulta 3: Requerimientos en ejecución------------------------->
+    <div id="consulta3" style="display:none;" class="col s8">
+        <div class="card hoverable">
+
+            <nav>
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Requerimientos en ejecución en un proyecto</h5>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="col s12 margin-b2">
+
+                                </div>
+                                <div class="col s12 margin-b2">
+                                    <div class="answer_list">
+                                        <div class="col s12 margin-b2">
+                                            <i class="p-size text-grey material-icons prefix">content_paste</i>
+                                            <label size="50">Proyecto </label>
+                                        </div>
+                                        <div class="col s5 margin-b2">
+                                            @Html.DropDownList("proy3", nameProjects, "Seleccione un proyecto", new { @onChange = "thirdReport()" })
+                                        </div>
+                                        <br />
+                                        <table class="table striped ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center black white-text">
+                                                        Nombre
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Complejidad
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Responsable
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table3" class="center"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-----------------------------Consulta 4: Cantidad de requerimientos---------------------------------->
+    <div id="consulta4" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Cantidad de requerimientos de cada tester en un proyecto</h5>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="col s12 margin-b2">
+
+                                </div>
+                                <div class="col s12 margin-b2">
+                                    <div class="answer_list">
+                                        <div class="col s12 margin-b2">
+                                            <i class="p-size text-grey material-icons prefix">content_paste</i>
+                                            <label size="50">Proyecto </label>
+                                        </div>
+                                        <div class="col s5 margin-b2">
+                                            @Html.DropDownList("proy4", nameProjects, "Seleccione un proyecto", new { @onChange = "fourthReport()" })
+                                        </div>
+                                        <br />
+                                        <table class="table striped ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center black white-text">
+                                                        Tester
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Requerimiento
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Complejidad
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table4" class="center"></tbody>
+
+                                </table>
+                                <div id="chart_div"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!---------------------------------Consulta 5: Historial participación-------------------------------->
+    <div id="consulta5" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Historial de participación de un tester</h5>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="col s12 margin-b2">
+
+                                </div>
+                                <div class="col s12 margin-b2">
+                                    <div class="answer_list">
+                                        <div class="col s12 margin-b2">
+                                            <i class="p-size text-grey material-icons prefix">content_paste</i>
+                                            <label size="50">Proyecto </label>
+                                        </div>
+                                        <div class="col s5 margin-b2">
+                                            @Html.DropDownList("testi", testiNames, "Seleccione un tester", new { @onChange = "fifthReport()" })
+                                        </div>
+                                        <br />
+                                        <table class="table striped ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center black white-text">
+                                                        Nombre del Proyecto
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Estado del Proyecto
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Nombre del Requerimiento
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Estado del Requerimiento
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Complejidad
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Fecha de Inicio
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Fecha de Finalización
+                                                    </th>
+                                                    <th class="center black white-text">
+                                                        Horas
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table5" class="center"></tbody>
+                                        </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-----------------------------------Consulta 6: Horas reales,estimadas y requerimientos de un proyecto-------------------------->
+    <div id="consulta6" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav class="margin-b">
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Reporte de horas y requerimientos por proyecto finalizado</h5>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="row margin-b">
+                        <div class="input-field col s6">
+                            <i class="p-size material-icons text-grey prefix">assignment</i>
+                            @Html.DropDownList("idPk", finishedProjects, "Seleccione un proyecto", new
+                            {
+                           @class = "validate form-control",
+                           @id = "finisehdProjects",
+                           @onchange = "getFinishedProjectInfo()",
+                           required = "required"
+                       })
+                            <label for="fProjects">Proyectos finalizados <span class="red-text">  *</span></label>
+                            <span class="text-error" id="ProjectError"></span>
+                        </div>
+                    </div>
+                    <div class="col s12 margin-b3">
+                        <div class="answer_list">
+                            <br />
+                            <table class="table striped ">
+                                <thead>
+                                    <tr>
+                                        <th class="center black white-text">
+                                            Hora Estimadas
+                                        </th>
+                                        <th class="center black white-text">
+                                            Horas Reales
+                                        </th>
+                                        <th class="center black white-text">
+                                            Requerimientos Exitosos
+                                        </th>
+                                        <th class="center black white-text">
+                                            Requerimientos Fallidos
+                                        </th>
+                                        <th class="center black white-text">
+                                            Requerimientos Totales
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="projectHoursRequirementsTable" class="center"></tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col s6">
+                        <div id="chart_project_div" style="width: 100%; height: 100%;"></div>
+                    </div>
+                    <div class="col s6">
+                        <div id="chart_project_div_req" style="width: 100%; height: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-----------------------------Consulta 7: Comparación entre líderes---------------------------------->
+    <div id="consulta7" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Comparación entre líderes</h5>
+                    </div>
+                </div>
+            </nav>
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="col s6">
+
+                        <div class="col s12 margin-b2">
+                            <div class="answer_list">
+                                <div class="col s12 margin-b2">
+                                    <i class="p-size text-grey material-icons prefix">account_box</i>
+                                    <label size="50">Lider </label>
+                                </div>
+                                <div class="col s12 margin-b2">
+                                    @Html.DropDownList("Leader", leaderNames, "Seleccione un lider", new { @onChange = "leaderStatistics()" })
+                                </div>
+                                <div class="input-field col s12">
+                                    <select id="complexity1" class="input-field col s12" onChange="leaderStatistics()">
+                                        <option value="" disabled selected>Nivel de complejidad</option>
+                                        <option value="Facil">Facil</option>
+                                        <option value="Mediano">Mediano</option>
+                                        <option value="Complejo">Complejo</option>
+                                        <option value="Muy Complejo">Muy Complejo</option>
+                                    </select>
+                                </div>
+                                <table class="table striped ">
+                                    <thead>
+                                        <tr>
+                                            <th class="center black white-text">
+                                                Requerimiento
+                                            </th>
+                                            <th class="center black white-text">
+                                                Duracion Estimado
+                                            </th>
+                                            <th class="center black white-text">
+                                                Duracion Real
+                                            </th>
+                                            <th class="center black white-text">
+                                                Diferencia
+                                            </th>
+                                            <th class="center black white-text">
+                                                Estado
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="leaderTable" class="center"></tbody>
+                                </table>
+                                <div id="chart_div_leader">
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="col s6">
+
+                        <div class="col s12 margin-b2">
+                            <div class="answer_list">
+                                <div class="col s12 margin-b2">
+                                    <i class="p-size text-grey material-icons prefix">account_box</i>
+                                    <label size="50">Lider </label>
+                                </div>
+                                <div class="col s12 margin-b2">
+                                    @Html.DropDownList("Leader2", leaderNames, "Seleccione un lider", new { @onChange = "leaderStatistics2()" })
+                                </div>
+
+
+                                <div class="input-field col s12">
+                                    <select id="complexity2" class="input-field col s12" onchange="leaderStatistics2()">
+                                        <option value="" disabled selected>Nivel de complejidad</option>
+                                        <option value="Facil">Facil</option>
+                                        <option value="Mediano">Mediano</option>
+                                        <option value="Complejo">Complejo</option>
+                                        <option value="Muy Complejo">Muy Complejo</option>
+                                    </select>
+                                </div>
+                                <table class="table striped ">
+                                    <thead>
+                                        <tr>
+                                            <th class="center black white-text">
+                                                Requerimiento
+                                            </th>
+                                            <th class="center black white-text">
+                                                Duracion Estimado
+                                            </th>
+                                            <th class="center black white-text">
+                                                Duracion Real
+                                            </th>
+                                            <th class="center black white-text">
+                                                Diferencia
+                                            </th>
+                                            <th class="center black white-text">
+                                                Estado
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="leaderTable2" class="center"></tbody>
+                                </table>
+                                <div id="chart_div_leader2">
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!---------------------------------------Consulta 8: Pruebas---------------------------------------->
+    <div id="consulta8" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Pruebas</h5>
+                    </div>
+                </div>
+            </nav>
+            <div class="card-content black-text">
+
+                <div class="row">
+
+                    <div class="col s4">
+
+                        @Html.DropDownList("proyConsulta8", projectsNames, "Seleccione un proyecto")
+
+                        <br />
+                        <div class="col s8 margin-b1" id="testerName">
+
+                            <p class="p-size col" id="pTester">
+
+
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div class="col s4"></div>
+                    <div class="col s4">
+
+                        @Html.DropDownList("reqConsulta8", new SelectList(" "), "Seleccione un requerimiento", new { @onChange = "testsReport()" })
+
+                    </div>
+
+                    <div class="col s12 margin-b3">
+                        <div class="answer_list">
+                            <br />
+                            <table class="table striped ">
+                                <thead>
+                                    <tr>
+                                        <th class="center black white-text"> Nombre de la prueba </th>
+                                        <th class="center black white-text"> Resultado </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="testsReportTable" class="center"></tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <div class="col s12">
+                        <div id="chartTestsQuery" style="width: 100%; height: 100%;"></div>
+                    </div>
+
+                </div>
+
+            </div>
+            
+
+
+        </div>
+    </div>
+
+    <!-----------------------------Consulta sobre horas de requerimientos por tester---------------->
+    <div id="testerReqHours" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav class="margin-b">
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Horas estimadas y reales en requerimientos por tester</h5>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="row margin-b">
+                        <div class="input-field col s6">
+                            <i class="p-size material-icons text-grey prefix">assignment</i>
+                            @Html.DropDownList("cedula", allTesters, "Seleccione un tester", new
+                            {
+                           @class = "validate form-control",
+                           @id = "testers",
+                           @onchange = "getTestersInfo()",
+                           required = "required"
+                       })
+                            <label for="fProjects">Tester <span class="red-text">  *</span></label>
+                            <span class="text-error" id="ProjectError"></span>
+                        </div>
+                    </div>
+                    <div class="col s12 margin-b3">
+                        <div class="answer_list">
+                            <br />
+                            <table class="table striped ">
+                                <thead>
+                                    <tr>
+                                        <th class="center black white-text">
+                                            Nombre Requerimiento
+                                        </th>
+                                        <th class="center black white-text">
+                                            Estado
+                                        </th>
+                                        <th class="center black white-text">
+                                            Horas Estimadas
+                                        </th>
+                                        <th class="center black white-text">
+                                            Horas reales
+                                        </th>
+                                        <th class="center black white-text">
+                                            Diferencia de horas
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="testerHoursRequirements" class="center"></tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col s8">
+                        <div id="testersHoursDiv" style="width: 100%; height: 100%;"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div id="consulta9" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Tester Disponibles</h5>
+                    </div>
+                </div>
+            </nav>
+            <div class="card-content black-text">
+                <select id="availability" class="input-field col s12" onchange="showTesterAvailability()">
+                    <option value="" disabled selected>Seleccione Disponibilidad</option>
+                    <option value="Ocupado">Ocupado</option>
+                    <option value="Disponible">Disponible</option>
+                </select>
+                <table class="table striped ">
+                    <thead>
+                        <tr>
+                            <th class="center black white-text">
+                                Cedula
+                            </th>
+                            <th class="center black white-text">
+                                Nombre
+                            </th>
+                            <th class="center black white-text">
+                                telefono
+                            </th>
+                            <th class="center black white-text">
+                                Proyecto
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="avilabilityTable" class="center"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="consulta10" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Reportes de rendimiento de los lideres</h5>
+                    </div>
+                </div>
+            </nav>
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="col s12 margin-b3">
+                        <div class="answer_list">
+                            <table class="table striped ">
+                                <thead>
+                                    <tr>
+                                        <th class="center black white-text">
+                                            Nombre
+                                        </th>
+                                        <th class="center black white-text">
+                                            Porcentaje de participacion
+                                        </th>
+                                        <th class="center black white-text">
+                                            Porcentaje de exito
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leadInformation" class="center"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="consulta11" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav class="margin-b">
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Reporte de rendimiento de testers</h5>
+                    </div>
+                </div>
+            </nav>
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="col s12 margin-b3">
+                        <div class="answer_list">
+                            <br />
+                            <table class="table striped ">
+                                <thead>
+                                    <tr>
+                                        <th class="center black white-text">
+                                            Nombre
+                                        </th>
+                                        <th class="center black white-text">
+                                            Porcentaje de participacion
+                                        </th>
+                                        <th class="center black white-text">
+                                            Porcentaje en ejecucion
+                                        </th>
+                                        <th class="center black white-text">
+                                            Porcentaje no iniciado
+                                        </th>
+                                        <th class="center black white-text">
+                                            Porcentaje finalizado con exito
+                                        </th>
+                                        <th class="center black white-text">
+                                            Porcentaje finalizado con fallas
+                                        </th>
+                                        <th class="center black white-text">
+                                            Porcentaje cancelado
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="testerData" class="center"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-------------------------------- Consulta busqueda por habilidad (Sergio)---------------------->
+    <div id="habilitiesQuery" style="display:none;" class="col s8">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper grey">
+                    <div>
+                        <h5 class="col s9">Busqueda por habilidades</h5>
+                    </div>
+                </div>
+            </nav>
+            <div class="card-content black-text">
+
+                <div class="row">
+
+                    <div class="col s4">
+
+                        @Html.DropDownList("habilitiesCategory", habilitiesCategories, "Seleccione una categoría")
+
+                    </div>
+                    <div class="col s4"></div>
+                    <div class="col s4">
+
+                        @Html.DropDownList("habilitiesDescription", new SelectList(" "), "Seleccione una habilidad", new { @onChange = "habilitiesReport()" })
+
+                    </div>
+
+                    <div class="col s12 margin-b3">
+                        <div class="answer_list">
+                            <br />
+                            <table class="table striped ">
+                                <thead>
+                                    <tr>
+                                        <th class="center black white-text"> Tester </th>
+                                        <th class="center black white-text"> Teléfono </th>
+                                        <th class="center black white-text"> Correo </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="habilitiesReportTable" class="center"></tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            
+
+
+        </div>
+    </div>
+</div>
+
+    }
+    else
+    {
+        <div class="row container center top-m-block">
+            <div class="card hoverable s10 section">
+                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para ingresar a la sección de Reportes.</h3>
+                <i class="large material-icons red-text">block</i>
+            </div>
+        </div>
+    }
+
+}
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render( "~/bundles/jqueryval" )
+    @Scripts.Render( "~/bundles/jquery" )
+    @Scripts.Render( "~/bundles/materializeD" )
+    @Scripts.Render( "~/bundles/bootstrap" )
+    @Scripts.Render( "~/bundles/ajax" )
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(showProject4);
+    </script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="objects.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        function secondReport() {
+            var proy2 = document.getElementById('proy2').value;
+            $("#table2").empty();
+            $.get("/Reports/CompletedRequirements", { proy: proy2 }, function (data) {
+                $.each(data, function (index, v2) {
+                    $("#table2").append("<tr><td>" + v2.nombreRequerimiento + "</td><td>" + v2.estadoRequerimiento + "</td><td>" + v2.complejidadRequerimiento + "</td><td>" + v2.nombreResponsable + "</td><tr>");
+                });
+            });
+        }
+    </script>
+    <script>
+        function thirdReport() {
+            var proy3 = document.getElementById('proy3').value;
+            $("#table3").empty();
+            $.get("/Reports/RunningRequirements", { proy: proy3 }, function (data) {
+                $.each(data, function (index, v3) {
+                    $("#table3").append("<tr ><td>" + v3.nombreReq + "</td><td>" + v3.complejidadReq + "</td><td>" + v3.nombreResp + "</td>");
+                });
+            });
+        }
+    </script>
+    <script>
+        function fourthReport() {
+            var proy4 = document.getElementById('proy4').value
+            $("#table4").empty();
+            $("#chart_div").empty();
+            $.get("/Reports/TesterRequirements", { proy: proy4 }, function (data) {
+                var table = [['Elemento', 'Cantidad', { role: 'style' }]];
+                var temp = "";
+                $.each(data, function (index, v4) {
+                    $("#table4").append("<tr><td>" + v4.nombreTester + "</td><td>" + v4.nombreR + "</td><td>" + v4.complejidad + "</td><td>");
+                    table.push([v4.nombreTester, v4.cantidadReqAsignados, 'blue']);
+                    if (temp == "") { temp = v4.nombreTester }
+                    else {
+                        if (v4.nombreTester == temp) {
+                            var ca = table.pop();
+                        } else { temp = v4.nombreTester }
+
+                    }
+
+                });
+                var data = google.visualization.arrayToDataTable(table);
+                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+                chart.draw(data);
+            });
+        }
+    </script>
+    <script>
+        function fifthReport() {
+            var tester = document.getElementById('testi').value
+            $("#table5").empty();
+            $.get("/Reports/ParticipationHistory", { tester: tester }, function (data) {
+                $.each(data, function (index, v5) {
+                    $("#table5").append("<tr><td>" + v5.proyecto + "</td><td>" + v5.estado + "</td><td>" + v5.Requerimiento + "</td><td>" + v5.estadoReq + "</td><td>" + v5.complejidad + "</td><td>" + dateFormat(new Date(parseInt((v5.fechaInicio).match(/\d+/)[0]))) + "</td><td>" + dateFormat(new Date(parseInt((v5.fechaFinalizacion).match(/\d+/)[0]))) + "</td><td>" + v5.duracionReal + "</td></tr>");
+                });
+            });
+        }
+
+    </script>
+
+    <script>
+        function dateFormat(d) {
+            console.log(d);
+            return ((d.getMonth() + 1) + "").padStart(2, "0")
+                + "/" + (d.getDate() + "").padStart(2, "0")
+                + "/" + d.getFullYear();
+        }
+    </script>
+
+                            <script>
+                                function leaderStatistics() {
+                                    $("#leaderTable").empty();
+                                    var leader = document.getElementById('Leader').value
+                                    var complexity = document.getElementById('complexity1').value
+                                    $.get("/Reports/leaderRequirementsStatistics", { leaderId: leader, complexity: complexity }, function (data) {
+                                        $.each(data, function (index, v2) {
+                                            var real = v2.duracionReal;
+                                            if (real == null) {
+                                                real = 0;
+                                            }
+                                            $("#leaderTable").append("<tr><td class='center'>" + v2.nombre + "</td><td class='center'>" + v2.duracionEstimada + "</td><td class='center'>" + real + "</td><td class='center'>" + (v2.duracionEstimada - real) + "</td><td class='center'>" + v2.estado + "</td></tr>");
+                                        });
+                                        //showLeaderChart();
+                                    });
+                                }
+                            </script>
+
+
+                            <script>
+                                function leaderStatistics2() {
+                                    $("#leaderTable2").empty();
+                                    var leader = document.getElementById('Leader2').value
+                                    var complexity = document.getElementById('complexity2').value
+                                    $.get("/Reports/leaderRequirementsStatistics", { leaderId: leader, complexity: complexity }, function (data) {
+                                        $.each(data, function (index, v2) {
+                                            var real = v2.duracionReal;
+                                            if (real == null) {
+                                                real = 0;
+                                            }
+                                            $("#leaderTable2").append("<tr><td class='center'>" + v2.nombre + "</td><td class='center'>" + v2.duracionEstimada + "</td><td class='center'>" + real + "</td><td class='center'>" + (v2.duracionEstimada - real) + "</td><td class='center'>" + v2.estado + "</td></tr>");
+                                        });
+                                        //showLeaderChart();
+                                    });
+                                }
+                            </script>
+
+                            <script>
+
+
+                                // Callback that creates and populates a data table,
+                                // instantiates the pie chart, passes in the data and
+                                // draws it.
+                                function showTesterAvailability() {
+                                    $("#avilabilityTable").empty();
+                                    var availability = document.getElementById('availability').value
+                                    $.get("/Reports/availableTesters", { availability: availability }, function (data) {
+                                        $.each(data, function (index, v2) {
+                                            var cedula = "";
+                                            var nombre = "";
+                                            var proyecto = "";
+                                            var numero = "";
+                                            if (availability == 'Disponible') {
+                                                cedula = v2.cedulaPK;
+                                                nombre = v2.nombreP;
+                                                proyecto = "Sin asignar";
+                                                numero = v2.telefono;
+                                            } else {
+                                                cedula = v2.cedulaPK;
+                                                nombre = v2.nombreP;
+                                                proyecto = v2.nombre;
+                                                numero = v2.telefono;
+
+                                            }
+                                            $("#avilabilityTable").append("<tr><td class='center'>" + cedula + "</td><td class='center'>" + nombre + "</td><td class='center'>" + numero + "</td><td class='center'>" + proyecto + "</td></tr>");
+                                        });
+                                        //showLeaderChart();
+                                    });
+
+
+                                }
+                            </script>
+
+
+
+
+                            <script>
+                                function showProjects1() {
+                                    document.getElementById('barra1').style.display = "block";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('barra10').style.display = "none";
+                                    document.getElementById('barra11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "block";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+
+                                }
+                            </script>
+                            <script>
+                                function showProjects2() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "block";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('barra10').style.display = "none";
+                                    document.getElementById('barra11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "block";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+                                }
+                            </script>
+                            <script>
+                                function showProjects3() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "block";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('barra10').style.display = "none";
+                                    document.getElementById('barra11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "block";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+                                }
+                            </script>
+                            <script>
+                                function showProjects4() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "block";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('barra10').style.display = "none";
+                                    document.getElementById('barra11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "block";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+                                }
+
+                                function showProjects5() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "block";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('barra10').style.display = "none";
+                                    document.getElementById('barra11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "block";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+                                }
+
+                                function showFishedProjectsReqHours() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "block";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('barra10').style.display = "none";
+                                    document.getElementById('barra11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "block";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+
+                                }
+
+                                function showProjects7() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "block";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('barra10').style.display = "none";
+                                    document.getElementById('barra11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "block";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+                                }
+                                function showProjects9() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "block";
+                                    document.getElementById('barra10').style.display = "none";
+                                    document.getElementById('barra11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "block";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+
+                                }
+
+                                function showProjects8() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "block";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('barra10').style.display = "none";
+                                    document.getElementById('barra11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "block";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+                                }
+
+                                function showHabilitiesQuery() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "block";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "block";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+                                    
+                                }
+
+                                function showProjects10() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('barra10').style.display = "block";
+                                    document.getElementById('barra11').style.display = "none";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "block";
+                                    document.getElementById('consulta11').style.display = "none";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+                                    getLeadData();
+                                }
+
+                                function showProjects11() {
+                                    document.getElementById('barra1').style.display = "none";
+                                    document.getElementById('barra2').style.display = "none";
+                                    document.getElementById('barra3').style.display = "none";
+                                    document.getElementById('barra4').style.display = "none";
+                                    document.getElementById('barra5').style.display = "none";
+                                    document.getElementById('barra6').style.display = "none";
+                                    document.getElementById('barra7').style.display = "none";
+                                    document.getElementById('barra8').style.display = "none";
+                                    document.getElementById('barra9').style.display = "none";
+                                    document.getElementById('barra10').style.display = "none";
+                                    document.getElementById('barra11').style.display = "block";
+                                    document.getElementById('barrah').style.display = "none";
+                                    document.getElementById('consulta1').style.display = "none";
+                                    document.getElementById('consulta2').style.display = "none";
+                                    document.getElementById('consulta3').style.display = "none";
+                                    document.getElementById('consulta4').style.display = "none";
+                                    document.getElementById('consulta5').style.display = "none";
+                                    document.getElementById('consulta6').style.display = "none";
+                                    document.getElementById('consulta7').style.display = "none";
+                                    document.getElementById('consulta8').style.display = "none";
+                                    document.getElementById('consulta9').style.display = "none";
+                                    document.getElementById('consulta10').style.display = "none";
+                                    document.getElementById('consulta11').style.display = "block";
+                                    document.getElementById('habilitiesQuery').style.display = "none";
+                                    document.getElementById('testerReqHoursBar').style.display = "none";
+                                    document.getElementById('testerReqHours').style.display = "none";
+                                    getTesterData();
+                                }
+
+                            </script>
+
+
+
+
+
+                        }
+

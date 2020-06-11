@@ -1,0 +1,102 @@
+﻿@model IEnumerable<ControlCalidad.Models.Requerimiento>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3 class="text-grey">Requerimientos del proyecto @ViewBag.projectName </h3>
+<div class="margin-b1">
+    <hr />
+</div>
+
+<div class="card">
+
+    <table class="table striped">
+        <tr>
+            <th class="center black white-text">
+                Requerimiento
+            </th>
+
+            <th class="center black white-text">
+                @Html.DisplayNameFor( model => model.estado )
+            </th>
+
+            <th class="center black white-text">
+                @Html.DisplayNameFor( model => model.complejidad )
+            </th>
+
+            <th class="center black white-text">
+                Acción
+            </th>
+
+
+            <th class="center black white-text">
+                Pruebas
+            </th>
+        </tr>
+
+        @foreach( var item in Model )
+        {
+            <tr>
+                <td class="center">
+                    @Html.DisplayFor( modelItem => item.nombre )
+                </td>
+                <td class="center">
+                    @Html.DisplayFor( modelItem => item.estado )
+                </td>
+                <td class="center">
+                    @Html.DisplayFor( modelItem => item.complejidad )
+                </td>
+                <td class="center">
+                    @Html.ActionLink("Detalles", "Details", new {
+                   id = item.idPK ,
+                   projectId = item.id_proyectoFK
+               } ,
+                    new { @class = "waves-effect waves-light btn black turq-hover" }
+                    )
+
+                </td>
+
+                <td class="center">
+                    @Html.ActionLink("Ver pruebas", "../Test/Index", new {
+                   id = item.idPK ,
+                   projectId = item.id_proyectoFK
+               } ,
+                    new { @class = "waves-effect waves-light btn black turq-hover" }
+                    )
+
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large black tooltipped" data-position="left" data-tooltip="Opciones">
+        <i class="large material-icons">more_vert</i>
+    </a>
+    <ul>
+        <li>
+            <a href="@Url.Action("Index", "Project")" class="btn-floating btn-large black turq-hover tooltipped" data-position="left" data-tooltip="Volver">
+                <i class="large material-icons">arrow_back</i>
+            </a>
+        </li>
+        <li id="reqAdd"">
+            <a href="@Url.Action("Create", "Requirement",new {projectId = ViewBag.projectId})" class="btn-add btn-floating btn-large black turq-hover left tooltipped" data-position="left" data-tooltip="Agregar nuevo requerimiento">
+                <i class="large material-icons">add</i>
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+@{
+
+    if(User.IsInRole( "Tester" ) || User.IsInRole( "Cliente" ) )
+    {
+        <script>
+            document.getElementById("reqAdd").classList.add("hide");
+        </script>
+    }
+}

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ControlCalidad.Models.AspNetUser>
+
+@{
+
+    if (User.IsInRole("Jefe"))
+    {
+        <h3 class="text-grey">Usuarios del sistema</h3>
+        <div class="margin-b1">
+            <hr />
+        </div>
+
+
+        <div class="fixed-action-btn">
+            <a href="@Url.Action( "Register" , "Account/Register" )" class="btn-floating btn-large black turq-hover tooltipped" data-position="left" data-tooltip="Agregar nuevo usuario">
+                <i class="large material-icons">add</i>
+            </a>
+        </div>
+
+        <div class="">
+
+            <div class="card">
+                <table class="table striped responsive-table">
+                    <tr class="">
+                        <th class="center black white-text">
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th class="center black white-text">
+                            @Html.DisplayNameFor(model => model.Role)
+                        </th>
+                        <th class="center black white-text">
+                            <p>Acción</p>
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="center">
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td class="center">
+                                @Html.DisplayFor(modelItem => item.Role)
+                            </td>
+
+
+                            <td class="center">
+
+
+                                @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new
+                                {
+                               @class = "turq-hover btn black waves-light"
+                           })
+
+
+                            </td>
+                        </tr>
+
+                    }
+
+                </table>
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="row container center top-m-block">
+
+            <div class="card hoverable s10 section">
+
+                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para ingresar al modulo de usuarios.</h3>
+                <i class="large material-icons red-text">block</i>
+
+            </div>
+        </div>
+    }
+
+}

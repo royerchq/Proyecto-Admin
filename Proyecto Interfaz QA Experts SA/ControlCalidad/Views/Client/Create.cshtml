@@ -1,0 +1,267 @@
+﻿@model ControlCalidad.Models.Cliente
+@{
+    ViewBag.Title = "Create";
+    List<SelectListItem> provinces = (List<SelectListItem>)ViewBag.provinces;
+}
+
+@{
+    if (User.IsInRole("Jefe"))
+    {
+        <h3 class="text-grey">Agregar Cliente</h3>
+        <div class="margin-b1">
+            <hr />
+        </div>
+
+        <div class="row container ">
+            <div class="col s12">
+                <div class="card hoverable">
+
+                    <nav>
+                        <div class="nav-wrapper black">
+                            <p class="col s4">Quality Expert S.A</p>
+                        </div>
+                    </nav>
+
+                    <div class="margin-b section">
+
+                    </div>
+
+                    @using (Html.BeginForm("Create", "Client", FormMethod.Post, new
+                    {
+                        @class = "",
+                        role = "form"
+                    }))
+                    {
+                        @Html.AntiForgeryToken()
+
+
+                        <div class="row center">
+                            @Html.ValidationSummary(true, "", new { @class = "red-text" })
+                        </div>
+
+                        <div class="row">
+                            <div class="col s4">
+                                <div class="row margin-b">
+                                    <div class="input-field col s10 offset-s1">
+                                        <i class="p-size text-grey material-icons prefix">perm_identity</i>
+                                        <label for="cedulaPK">Cédula <span class="red-text">  *</span>  </label>
+                                        <input class="validate form-control" type="text" name="cedulaPK" id="idClient" required onkeydown="validateIdClient(this)" onkeyup="validateIdClient(this)" />
+                                        @Html.ValidationMessageFor(m => m.cedulaPK, null, new { @class = "text-error" })
+                                        <span class="text-error" id="idClientError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s10 offset-s1">
+                                        <i class="p-size text-grey material-icons prefix">account_circle</i>
+                                        <label for="apellido2">Segundo Apellido <span class="red-text">  *</span>  </label>
+                                        <input class="validate form-control" type="text" name="apellido2" id="secondSurnameClient" required onkeydown="validateSecondSurnameClient(this)" onkeyup="validateSecondSurnameClient(this)" />
+                                        @Html.ValidationMessageFor(m => m.apellido2, null, new { @class = "text-error" })
+                                        <span class="text-error" id="secondSurnameClientError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s10 offset-s1">
+                                        <i class="p-size text-grey material-icons prefix">place</i>
+                                        @if (ViewBag.provinces != null)
+                                        {
+                                            @Html.DropDownList("provincia", provinces, "Seleccione una provincia")
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col s4">
+                                <div class="row margin-b">
+                                    <div class="input-field col s10 offset-s1">
+                                        <i class="p-size text-grey material-icons prefix">account_circle</i>
+                                        <label for="nombreP">Nombre <span class="red-text">  *</span>  </label>
+                                        <input class="validate form-control" type="text" name="nombreP" id="nameClient" required onkeydown="validateNameClient(this)" onkeyup="validateNameClient(this)" />
+                                        @Html.ValidationMessageFor(m => m.nombreP, null, new { @class = "text-error" })
+                                        <span class="text-error" id="nameClientError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s10 offset-s1">
+                                        <i class="p-size text-grey material-icons prefix">phone</i>
+                                        <input class="validate form-control" type="text" name="telefono" id="clientPhone" onkeydown="validateClientPhoneNumber(this)" onkeyup="validateClientPhoneNumber(this)" />
+                                        @Html.LabelFor(m => m.telefono, "Teléfono", new { @class = "" })
+                                        @Html.ValidationMessageFor(m => m.telefono, null, new { @class = "text-error" })
+                                        <span class="text-error" id="clientPhoneError"></span>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s10 offset-s1">
+                                        <i class="p-size text-grey material-icons prefix">place</i>
+                                        @Html.DropDownListFor(model => model.canton, new SelectList(" "), "Seleccione un canton", new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col s4">
+                                <div class="row margin-b">
+                                    <div class="input-field col s10 offset-s1">
+                                        <i class="p-size text-grey material-icons prefix">account_circle</i>
+                                        <label for="apellido1">Primer Apellido <span class="red-text">  *</span>  </label>
+                                        <input class="validate form-control" type="text" name="apellido1" id="surnameClient" required onkeydown="validateSurnameClient(this)" onkeyup="validateSurnameClient(this)" />
+                                        @Html.ValidationMessageFor(m => m.apellido1, null, new { @class = "text-error" })
+                                        <span class="text-error" id="surnameClientError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s10 offset-s1">
+                                        <i class="p-size text-grey material-icons prefix">mail</i>
+                                        <label for="correo">Correo <span class="red-text">  *</span>  </label>
+                                        <input class="validate form-control" type="text" name="correo" id="clientEmail" required onkeydown="validateClientEmail(this)" onkeyup="validateClientEmail(this)" />
+                                        @Html.ValidationMessageFor(m => m.correo, null, new { @class = "text-error" })
+                                        <span class="text-error" id="clientEmailError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s10 offset-s1">
+                                        <i class="p-size text-grey material-icons prefix">place</i>
+                                        @Html.DropDownListFor(model => model.distrito, new SelectList(" "), "Seleccione un distrito", new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row margin-b">
+                                <div class="input-field col s10 offset-s1">
+                                    <i class="p-size text-grey material-icons prefix">place</i>
+                                    @Html.LabelFor(model => model.direccionExacta, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.EditorFor(model => model.direccionExacta, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.direccionExacta, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hide row container center" id="loading">
+                            <div class="">
+                                <i class="material-icons text-turq ">info_outline</i>
+                            </div>
+                            <div class="">
+                                <p class="text-turq">
+                                    Registrando... Por favor espere.
+                                </p>
+                            </div>
+                            <div class="progress">
+                                <div class="indeterminate"></div>
+                            </div>
+                        </div>
+
+                        <div class=" row container center hide " id="complete">
+                            <div class="">
+                                <i class="material-icons text-turq ">info_outline</i>
+                            </div>
+                            <div class="">
+                                <p class="text-turq">
+                                    Se registró correctamente.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="margin-required">
+                            <p class="text-error">
+                                Los campos con * son requeridos.
+                            </p>
+                        </div>
+                        <div class="margin-b1">
+                        </div>
+
+
+                        <div class="row center">
+                            
+                            <button id="btn-delete" type="reset" class="margin-r waves-effect red-hover btn red accent-4">Cancelar</button>
+
+                            <button id="btn-submit" type="submit" class="margin-l btn waves-effect waves-light turq btn-login modal-trigger">Crear</button>
+                        </div>
+
+                        <div class="margin-b section">
+
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="fixed-action-btn">
+            <a href="@Url.Action( "Index" , "Client/Index" )" class="btn-floating btn-large black left turq-hover">
+                <i class="large material-icons">arrow_back</i>
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row container center top-m-block">
+
+            <div class="card hoverable s10 section">
+
+                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para crear un cliente.</h3>
+                <i class="large material-icons red-text">block</i>
+
+            </div>
+        </div>
+    }
+
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/materializeD")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/ajax")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#provincia").change(function () {
+
+                var output = "";
+                $.get("/localizations/cantonesList", { provincia: $("#provincia").val() }, function (data) {
+                    $('#canton').children().remove().end()
+                    $.each(data, function (index, row) {
+                        $("#canton").append("<option value='" + row.codigoPK + "'>" + row.nombre + "</option>")
+                    });
+                    $('select').formSelect();
+                    $.get("/localizations/districtsList", { provincia: $("#provincia").val(), canton: $("#canton").val() }, function (data) {
+                        $('#distrito').children().remove().end()
+                        $.each(data, function (index, row) {
+                            $("#distrito").append("<option value='" + row.codigoPK + "'>" + row.nombre + "</option>")
+                        });
+                        $('select').formSelect();
+                    });
+                });
+            })
+        });
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            $("#canton").change(function () {
+
+                var output = "";
+                $.get("/localizations/districtsList", { provincia: $("#provincia").val(), canton: $("#canton").val() }, function (data) {
+                    $('#distrito').children().remove().end()
+                    $.each(data, function (index, row) {
+                        $("#distrito").append("<option value='" + row.codigoPK + "'>" + row.nombre + "</option>")
+                    });
+                    $('select').formSelect();
+                });
+            })
+        });
+    </script>
+}

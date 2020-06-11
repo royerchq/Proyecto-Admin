@@ -1,0 +1,81 @@
+﻿    @model IEnumerable<ControlCalidad.Models.Cliente>
+@*
+    @{
+        ViewBag.Title = "Index";
+    }
+
+*@
+
+@{
+
+    if (User.IsInRole("Jefe"))
+    {
+        <h3 class="text-grey">Clientes</h3>
+        <hr />
+
+        <div class="fixed-action-btn">
+            <a href="@Url.Action("Crear", "Client/Create")" class="btn-floating btn-large black turq-hover"><i class="large material-icons">add</i></a>
+        </div>
+        <div class="card ">
+            <table class="table striped ">
+                <thead>
+                    <tr>
+                        <th class="center black white-text">
+                            Nombre
+                        </th>
+                        <th class="center black white-text">
+                            Teléfono
+                        </th>
+                        <th class="center black white-text">
+                            Correo
+                        </th>
+                        <th class="center black white-text">
+                            Dirección
+                        </th>
+                        <th class="center black white-text">
+                            <p>Acción</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="center">
+                                @Html.DisplayFor(modelItem => item.nombreP)
+                                @Html.DisplayFor(modelItem => item.apellido1)
+                            </td>
+                            <td class="center">
+                                @Html.DisplayFor(modelItem => item.telefono)
+                            </td>
+                            <td class="center">
+                                @Html.DisplayFor(modelItem => item.correo)
+                            </td>
+                            <td class="center">
+                                @Html.DisplayFor(modelItem => item.provincia),
+                                @Html.DisplayFor(modelItem => item.canton),
+                                @Html.DisplayFor(modelItem => item.distrito)
+                            </td>
+                            <td class="center">
+                                @Html.ActionLink("Detalles", "Details", new { id = item.cedulaPK }, new {
+                               @class = "waves-effect waves-light btn  black turq-hover"
+                           })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+     }
+    else
+    {
+        <div class="row container center top-m-block">
+            <div class="card hoverable s10 section">
+                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para ingresar a la sección de clientes.</h3>
+                <i class="large material-icons red-text">block</i>
+            </div>
+         </div>
+    }
+
+
+ }

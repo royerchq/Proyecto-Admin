@@ -1,0 +1,151 @@
+﻿@model ControlCalidad.Models.RegisterViewModel
+@*
+    @{
+        ViewBag.Title = "Register";
+    }
+*@
+
+@{
+
+    if( User.IsInRole( "Jefe" ) )
+    {
+
+        <h3 class="text-grey">Registrar Usuario</h3>
+        <div class="margin-b1">
+            <hr />
+        </div>
+
+        <div class="row container">
+            <div class="col s8 offset-s2">
+                <div class="card hoverable">
+                    <nav>
+                        <div class="nav-wrapper black">
+                            <p class="col s4">Quality Expert S.A</p>
+                        </div>
+                    </nav>
+                    <div class="margin-b section">
+                    </div>
+                    @using( Html.BeginForm( "Register" , "Account" , FormMethod.Post , new {
+                        @onsubmit = "onSubmit()"
+                    } ) )
+                    {
+                        @Html.AntiForgeryToken( );
+
+                        <div class="row center">
+                            @Html.ValidationSummary(true, "", new { @class = "red-text"} )
+                        </div>
+
+                        <div class="row margin-b">
+                            <div class="input-field col s6 offset-s3">
+                                <i class="text-grey material-icons prefix">mail</i>
+                                <input class="validate form-control" type="email" name="Email" id="Email" onblur="validateEmail('Email')" onchange="validateEmail('Email')" onkeyup="validateEmail('Email')" required />
+                                <label for="Email">Correo <span class="red-text">  *</span>  </label>
+                                <span class="text-error" id="mailError"></span>
+                            </div>
+                        </div>
+
+                        <div class="row margin-b">
+                            <i class=" small text-grey col s1 offset-s3 material-icons prefix">work</i>
+                            <div class="input-field col s5">
+                                @Html.ValidationMessageFor( m => m.Role , null , new {@class = "text-error"} )
+                                <select id="Role" name="Role" required onchange="validateRole()" onclick="validateRole()">
+                                    <option value="" disabled selected>Seleccione un rol</option>
+                                    <option value="Jefe">Jefe</option>
+                                    <option value="Lider">Lider</option>
+                                    <option value="Tester">Tester</option>
+                                    <option value="Cliente">Cliente</option>
+                                </select>
+                                <label for="Role">Rol<span class="red-text">  *</span>  </label>
+                                <span class="text-error" id="RoleError"></span>
+
+                            </div>
+                        </div>
+
+                        <div class="row margin-b">
+                            <div class="input-field col s6  offset-s3">
+                                <i class="text-grey material-icons prefix">lock</i>
+                                <input class="validate form-control" type="password" name="Password" id="Password" required onkeypress="validatePassword('Password')" />
+                                <label for="Password">Contraseña <span class="red-text">  *</span>  </label>
+                                <span class="text-error" id="passwordError"></span>
+                            </div>
+                        </div>
+
+                        <div class="row margin-b">
+                            <div class="input-field col s6  offset-s3">
+                                <i class=" text-grey material-icons prefix">lock</i>
+                                <input class="validate form-control" type="password" name="ConfirmPassword" id="ConfirmPassword" required onkeyup="validateConfirmPass()" onfocus="validateConfirmPass()" />
+                                <label for="ConfirmPassword">Confirmaar contraseña <span class="red-text">  *</span>  </label>
+                                <span class="text-error" id="passwordConfirmError"></span>
+                            </div>
+                        </div>
+
+                        <div class="hide row container center" id="loading">
+                            <div class="">
+                                <i class="material-icons text-turq ">info_outline</i>
+                            </div>
+                            <div class="">
+                                <p class="text-turq">
+                                    Registrando... Por favor espere.
+                                </p>
+                            </div>
+                            <div class="progress">
+                                <div class="indeterminate"></div>
+                            </div>
+                        </div>
+
+                        <div class=" row container center hide " id="complete">
+                            <div class="">
+                                <i class="material-icons text-turq ">info_outline</i>
+                            </div>
+                            <div class="">
+                                <p class="text-turq">
+                                    Se registró correctamente.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="margin-required">
+                            <p class="text-error">
+                                Los campos con * son requeridos.
+                            </p>
+                        </div>
+
+                        <div class="margin-b1">
+                        </div>
+
+                        <div class="row center">
+
+                            @Html.ActionLink("Cancelar", "../LoginUsers/Index", null, new {@class = "margin-r waves-effect red-hover btn red accent-4"} )
+                            <button type="submit" id="btn-submit" class=" margin-l btn waves-effect waves-light turq btn-login modal-trigger">ACEPTAR</button>
+                        </div>
+                        <div class="margin-b section">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="fixed-action-btn">
+            <a href="@Url.Action( "Index" , "LoginUsers/Index" )" class="black btn-floating btn-large left turq-hover">
+                <i class="large material-icons">arrow_back</i>
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row container center top-m-block">
+
+            <div class="card hoverable s10 section">
+
+                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para registrar usuarios.</h3>
+                <i class="large material-icons red-text">block</i>
+
+            </div>
+        </div>
+    }
+
+}
+
+
+@section Scripts {
+    @Scripts.Render( "~/bundles/jqueryval" )
+}

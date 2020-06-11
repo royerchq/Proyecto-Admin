@@ -1,0 +1,182 @@
+﻿@model ControlCalidad.Models.Proyecto
+
+@*  {
+        ViewBag.Title = "Details";
+    }
+*@
+
+
+@{
+
+    string leader = ViewBag.projectLeader;
+    string startDate = Model.fechaInicio.ToShortDateString();
+    string clientName = Model.Cliente.nombreP + " " + Model.Cliente.apellido1;
+
+    <h3 class="text-grey"> @Html.DisplayFor( model => model.nombre ) </h3>
+    <div class="margin-b1">
+        <hr />
+    </div>
+    <div>
+        <div class="row">
+            <div class="col s6 offset-s3">
+                <div class="card hoverable">
+                    <nav>
+                        <div class="nav-wrapper black">
+                            <p class="col s4"> Quality Expert S.A</p>
+                        </div>
+                    </nav>
+                    <div class="card-content black-text">
+                        <div class="row">
+
+                            <div class="hide">
+                                <input id="idProject" type="text" value="@Model.idPK" />
+                            </div>
+
+                            <div class="col s12 margin-b1">
+                                <p class="p-size">
+                                    <i class="material-icons left text-grey">person</i>
+                                    <span class="text-turq"> Nombre del cliente </span>
+                                    : @Html.DisplayName( clientName )
+                                </p>
+                            </div>
+                            <div class="col s12 margin-b1">
+                                <p class="p-size">
+                                    <i class="material-icons left text-grey">person</i>
+                                    <span class="text-turq"> Lider del proyecto </span>
+                                    : @Html.DisplayName( leader )
+                                </p>
+                            </div>
+                            <div class="col s12 margin-b1">
+                                <p class="p-size">
+                                    <i class="material-icons left text-grey">assignment</i>
+                                    <span class="text-turq"> Objetivo </span>
+                                    : @Html.DisplayFor( model => model.objetivo )
+                                </p>
+                            </div>
+                            <div class="col s12 margin-b1">
+                                <p class="p-size">
+                                    <i class="material-icons left text-grey">date_range</i>
+                                    <span class="text-turq">Fecha de inicio</span>
+                                    : @Html.Name( startDate )
+                                </p>
+                            </div>
+                            <div class="col s12 margin-b1">
+                                <p class="p-size">
+                                    <i class="material-icons left text-grey">date_range</i>
+                                    <span class="text-turq">Fecha de finalizacion</span>
+                                    : @Html.DisplayFor( model => model.fechaFin )
+                                </p>
+                            </div>
+                            <div class="col s12 margin-b1">
+                                <p class="p-size">
+                                    <i class="material-icons left text-grey">info</i>
+                                    <span class="text-turq">Estado</span>
+                                    : @Html.DisplayFor( model => model.estado )
+                                </p>
+                            </div>
+                            <div class="col s12 margin-b1">
+                                <p class="p-size">
+                                    <i class="material-icons left text-grey">hourglass_empty</i>
+                                    <span class="text-turq">Duracion estimada</span>
+                                    : @Html.DisplayFor( model => model.duracionEstimada )
+                                </p>
+                            </div>
+                            <div class="col s12 margin-b1">
+                                <p class="p-size">
+                                    <i class="material-icons left text-grey">hourglass_full</i>
+                                    <span class="text-turq">Duracion real</span>
+                                    : @Html.DisplayFor( model => model.duracionReal )
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="card-action center">
+
+                            <a id="delete-btn" class="margin-r waves-effect btn red accent-4 red-hover modal-trigger" href="#modalProject">Borrar</a>
+                            @Html.ActionLink("Editar", "Edit", new { id = Model.idPK }, new
+                       {
+                           @class = "margin-l waves-effect waves-light btn turq", @id = "edit-btn"
+                       })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="btn-add" class="fixed-action-btn">
+        <a href="@Url.Action("Index", "Project/Index")" class="btn-floating btn-large black turq-hover left tooltipped" data-position="left" data-tooltip="Volver">
+            <i class="large material-icons">arrow_back</i>
+        </a>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modalProject" class="modal">
+        <div class="row">
+            <div class="">
+                <nav>
+                    <div class="nav-wrapper black">
+                        <p class="col s4 offset-s5">Quality Expert S.A</p>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div class="modal-content ">
+            <div class="row">
+                <div class="col s2">
+                    <i class="material-icons medium red-text text-darken-4">warning</i>
+                </div>
+                <div class="s8">
+                    <h5>Está seguro que desea <span class="red-text text-darken-4 "> borrar </span> el proyecto  @Model.nombre ?</h5>
+                </div>
+                <div class="left">
+                    <span class="text-error" id="activeError"></span>
+                </div>
+            </div>
+
+            <div class="margin-b1">
+            </div>
+
+            <div class="hide row container center" id="loading">
+                <div class="">
+                    <i class="material-icons text-turq ">info_outline</i>
+                </div>
+                <div class="">
+                    <p class="text-turq">
+                        Borrando... Por favor espere.
+                    </p>
+                </div>
+
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+            </div>
+
+            <div class="margin-b1">
+                <hr />
+            </div>
+
+            <div class="modal-footer">
+                <a class="modal-close btn red-hover  red accent-4 white-text">Cancelar</a>
+
+                <a onclick="removeProject()" class="waves-effect waves-effect waves-light btn turq">Aceptar</a>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@{
+
+    if( User.IsInRole( "Lider" ) || User.IsInRole( "Tester" ) || User.IsInRole( "Cliente" ) )
+    {
+        <script>
+            document.getElementById("delete-btn").classList.add("hide");
+            document.getElementById("edit-btn").classList.add("hide");
+        </script>
+    }
+}

@@ -1,0 +1,69 @@
+﻿@model ControlCalidad.Models.Cliente
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3 class="text-grey">¿Está seguro de que desea borrar al cliente?</h3>
+<div class="margin-b1">
+    <hr />
+</div>
+
+<div class="row">
+    <div class="col s6 offset-s3">
+        <div class="card hoverable ">
+            <nav>
+                <div class="nav-wrapper turq">
+                    <p class="col s4">Quality Expert S.A</p>
+                </div>
+            </nav>
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="col s12 margin-b1">
+                        <p class="p-size"> <i class="material-icons left text-grey">person</i> <span class="text-turq"> Nombre de cliente </span> : @Html.DisplayFor(model => model.nombreP) </p>
+                    </div>
+                    <div class="col s12 margin-b1">
+                        <p class="p-size"> <i class="material-icons left text-grey">person</i> <span class="text-turq"> Primer apellido </span> : @Html.DisplayFor(model => model.apellido1) </p>
+                    </div>
+                    <div class="col s12 margin-b1">
+                        <p class="p-size"> <i class="material-icons left text-grey">person</i> <span class="text-turq"> Segundo apellido </span> : @Html.DisplayFor(model => model.apellido2) </p>
+                    </div>
+                    <div class="col s12 margin-b1">
+                        <p class="p-size"> <i class="material-icons left text-grey">person</i> <span class="text-turq"> Cédula </span> : @Html.DisplayFor(model => model.cedulaPK) </p>
+                    </div>
+                    <div class="col s12 margin-b1">
+                        <p class="p-size"> <i class="material-icons left text-grey">call</i> <span class="text-turq"> Teléfono</span> : @Html.DisplayFor(model => model.telefono) </p>
+                    </div>
+                    <div class="col s12 margin-b1">
+                        <p class="p-size"> <i class="material-icons left text-grey">mail</i> <span class="text-turq"> Correo</span> : @Html.DisplayFor(model => model.correo) </p>
+                    </div>
+                    <div class="col s12 margin-b1">
+                        <p class="p-size"> <i class="material-icons left text-grey">place</i> <span class="text-turq"> Provincia</span> : @Html.DisplayFor(model => model.provincia) </p>
+                    </div>
+                    <div class="col s12 margin-b1">
+                        <p class="p-size"> <i class="material-icons left text-grey">place</i> <span class="text-turq"> Cantón</span> : @Html.DisplayFor(model => model.canton) </p>
+                    </div>
+                    <div class="col s12 margin-b1">
+                        <p class="p-size"> <i class="material-icons left text-grey">place</i> <span class="text-turq"> Distrito</span> : @Html.DisplayFor(model => model.distrito) </p>
+                    </div>
+                    <div class="col s12 margin-b1">
+                        <p class="p-size"> <i class="material-icons left text-grey">place</i> <span class="text-turq"> Dirección Exacta</span> : @Html.DisplayFor(model => model.direccionExacta) </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-action center">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-actions no-color">
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Aceptar" class="btn btn-default" />
+                            @Html.ActionLink("Cancelar", "Index", null, new { @class = "waves-effect red-hover btn red accent-4" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

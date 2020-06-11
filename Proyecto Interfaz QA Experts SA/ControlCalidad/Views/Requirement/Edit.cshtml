@@ -1,0 +1,255 @@
+﻿@model ControlCalidad.Models.Requerimiento
+
+@{
+    ViewBag.Title = "Edit";
+    List<SelectListItem> testerId = ( List<SelectListItem> ) ViewBag.testers;
+    string assignDate = ViewBag.fechaAsignacion;
+    string endDate = ViewBag.fechaFin;
+    string beginDate = ViewBag.fechaInicio;
+    string testerTitle = ViewBag.defaultText;
+}
+
+
+
+<h3 class="text-grey">Editar Requerimiento</h3>
+<div class="margin-b1">
+    <hr />
+</div>
+
+@{
+
+
+    if( User.IsInRole( "Jefe" ) )
+    {
+
+        <div class="row container">
+            <div class="">
+                <div class="card hoverable">
+                    <nav>
+                        <div class="nav-wrapper black">
+                            <p class="col s4"> Quality Expert S.A</p>
+                        </div>
+                    </nav>
+                    @using( Html.BeginForm( "Edit" , "Requirement" , FormMethod.Post , new {
+                        @onsubmit = "onSubmit()"
+                    } ) )
+                    {
+                        @Html.AntiForgeryToken( )
+                        @Html.Hidden("idTester", "", new { @id = "idTester" })
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="margin-b section">
+                        </div>
+
+
+                        <input type="text" value="@Model.idPK" name="idPK" class="hide" />
+
+                        <input type="text" value="@Model.id_proyectoFK" name="id_proyectoFK" class="hide" />
+
+
+                        <div class="row">
+                            <div class="col s4">
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">assignment_ind</i>
+                                        @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <input value="@Model.nombre" name="nombre" type="text" required class="validate form-control" onblur="" onkeyup="" id="requirementName" />
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">date_range</i>
+                                        <label for="fechaAsignacion">Fecha de Asignacion</label>
+                                        <input value="@assignDate" type="text" class="datepicker datepickerDate" id="fechaAsignacion" name="fechaAsignacion" onchange="validateEndAssignDate('fechaAsignacion', 'assigndateError')" />
+                                        <span class="text-error" id="assigndateError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col col s11">
+                                        <i class="p-size material-icons text-grey prefix">info</i>
+                                        <select name="complejidad" required id="complejidad">
+                                            <option value="@Model.complejidad">@Model.complejidad</option>
+                                            <option value="Facil">Facil</option>
+                                            <option value="Intermedio">Intermedio</option>
+                                            <option value="Dificil">Dificil</option>
+                                        </select>
+                                        <label for="complejidad">Complejidad del Requerimiento</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col s4">
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">date_range</i>
+                                        <label for="fechaInicio">Fecha de Inicio</label>
+                                        <input type="text" value="@Model.fechaInicio.ToShortDateString()" class="datepicker datepickerDate" id="fechaInicio" name="fechaInicio" required onchange="validateDate()" />
+                                        <span class="text-error" id="dateErrorMessage"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">person</i>
+                                        @Html.DropDownList("testers_drop", testerId, testerTitle, new {@onchange = "setIdTester()", @id = "dropdown" })
+                                        <label for="dropdown"> Tester asignado</label>
+                                        <span class="text-error" id="testerError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">hourglass_empty</i>
+                                        @Html.LabelFor(model => model.duracionEstimada, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <input value="@Model.duracionEstimada" name="duracionEstimada" type="number" required class="validate form-control" onblur="validateDuration()" onkeyup="validateDuration()" id="avrDuration" />
+                                        <span class="text-error" id="avrDurationError"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col s4">
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">date_range</i>
+                                        <label for="fechaFin">Fecha de Finalización</label>
+                                        <input value="@endDate" type="text" class="datepickerDate datepicker" id="fechaFinalizacion" name="fechaFinalizacion" onchange="validateEndAssignDate('fechaFinalizacion', 'endDateError')" />
+                                        <span class="text-error" id="endDateError"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col col s11">
+                                        <i class="p-size material-icons text-grey prefix">info_outline</i>
+                                        <select name="estado" required id="estado">
+                                            <option value="@Model.estado">@Model.estado</option>
+                                            <option value="No iniciado">No iniciado</option>
+                                            <option value="En ejecucion">En ejecución</option>
+                                            <option value="Finalizado Exitoso">Finalizado Exitoso</option>
+                                            <option value="Finalizado Fallido">Finalizado Fallido</option>
+                                            <option value="Cancelado">Cancelado</option>
+                                        </select>
+                                        <label for="estado">Estado del Requerimiento </label>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">hourglass_full</i>
+                                        <label for="duracionReal">Duración Real  </label>
+                                        <input value="@Model.duracionReal" name="duracionReal" type="number" class="validate form-control" onblur="validateRealDuration()" onkeyup="validateRealDuration()" id="RealDur" />
+                                        <span class="text-error" id="realDurError"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col s10 offset-s1">
+                                <div class="row margin-b">
+                                    <div class="input-field col s11">
+                                        <i class="p-size material-icons text-grey prefix">assignment</i>
+                                        @Html.LabelFor(model => model.descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <input value="@Model.descripcion" name="descripcion" type="text" class="validate form-control" onblur="" onkeyup="" id="descripcion" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class=" row container center hide" id="loading">
+                            <div class="">
+                                <i class="material-icons text-turq ">info_outline</i>
+                            </div>
+                            <div class="">
+                                <p class="text-turq">
+                                    Editando... Por favor espere.
+                                </p>
+                            </div>
+
+                            <div class="progress">
+                                <div class="indeterminate"></div>
+                            </div>
+                        </div>
+
+                        <div class=" row container center hide " id="complete">
+                            <div class="">
+                                <i class="material-icons text-turq ">info_outline</i>
+                            </div>
+                            <div class="">
+                                <p class="text-turq">
+                                    Se edito correctamente.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="margin-b1">
+                        </div>
+
+                        <div class="row center">
+                            <button id="btn-delete" type="reset" class="margin-r waves-effect red-hover btn red accent-4">Cancelar</button>
+
+                            <button id="btn-submit" type="submit" class="margin-l waves-effect waves-light btn turq">Guardar</button>
+                        </div>
+
+                        <div class="margin-b section">
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+    else
+    {
+        <div class="row container center top-m-block">
+
+            <div class="card hoverable s10 section">
+
+                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para editar un empleado.</h3>
+                <i class="large material-icons red-text">block</i>
+
+            </div>
+        </div>
+    }
+
+    <div id="btn-add" class="fixed-action-btn">
+        <a href="@Url.Action("Details", "Requirement", new { id = Model.idPK, projectId = Model.id_proyectoFK })" class="btn-floating btn-large black turq-hover left tooltipped" data-position="left" data-tooltip="Volver">
+            <i class="large material-icons">arrow_back</i>
+        </a>
+    </div>
+
+    <script>
+
+        /*
+            * Function that extracts the ID if you add a new member, actuated by selecting a member in the table
+            * Parameters: id, represents the ID of the selected employee
+            * Return: None
+            * */
+        function setIdTester() {
+            $('#idTester').val($('#dropdown').val());
+        }
+    </script>
+
+}
+@{
+    if( User.IsInRole( "Tester" ) )
+    {
+        <script>
+            document.getElementById("complejidad").disabled = true;
+            document.getElementById("requirementName").readOnly = true;
+            document.getElementById("fechaAsignacion").disabled = true;
+            document.getElementById("avrDuration").readOnly = true;
+            document.getElementById("descripcion").readOnly = true;
+
+        </script>
+    }
+
+}
+
+
+@section Scripts {
+    @Scripts.Render( "~/bundles/jqueryval" )
+}

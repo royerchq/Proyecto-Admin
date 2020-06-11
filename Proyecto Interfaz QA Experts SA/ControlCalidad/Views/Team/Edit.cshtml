@@ -1,0 +1,212 @@
+﻿@model ControlCalidad.Models.TrabajaEn
+
+@{
+    ViewBag.Title = "Edit";
+    List<SelectListItem> cant_reqs = (List<SelectListItem>)ViewBag.cant_reqs;
+
+    String req = "";
+    String rol = "";
+    String color = "";
+}
+
+
+<style>
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    .material-icons.fixed {
+        position: fixed;
+        font-size: 35px;
+        vertical-align: -14px;
+        position: relative;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("IdNew", "", new { @id = "IdNew" })
+    @Html.Hidden("IdMember", "", new { @id = "IdMember" })
+    @Html.Hidden("Ability", "", new { @id = "Ability" })
+    @Html.Hidden("Project", "", new { Value = ViewBag.id_proyecto, @id = "Project" })
+
+
+    <div class="form-horizontal">
+        <h3 class="text-grey">Proyecto @ViewBag.project_name</h3>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <!-- Search box -->
+        <form action="Edit">
+            <i class="material-icons fixed" id="searchIcon">search</i>
+            <input type="text" id="ability" placeholder="Buscar por habilidades" style="width: 50%;">
+            <button type="submit" id="searchButton" onclick="getAbility()" class="btn btn-default" name="Search" value="Search" title="Search">Buscar</button>
+        </form>
+
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+        <div class="row">
+            <!-- Card for Available Employees -->
+            <div class="col s6" id="employeesAvailable">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="table-responsive collection">
+                            <table class="table striped">
+                                <tr>
+                                    <th class="center black white-text" style="width: 200%;">
+                                        @Html.DisplayName("Disponibles")
+                                    </th>
+                                </tr>
+                            </table>
+                            <table>
+
+                                <tbody>
+                                    @if (ViewBag.disponibles != null)
+                                    {
+                                        foreach (var tester in ViewBag.disponibles)
+                                        {
+                                            <a href="javascript:setIdNew(@tester.Value)" id="@tester.Value" class="collection-item">@tester.Text</a>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row center">
+                        <button type="submit" name="Allocate" value="Allocate" class="margin-l btn waves-effect waves-light turq white-text">Asignar</button>
+                    </div>
+                    <div class="margin-b section">
+                    </div>
+                </div>
+            </div>
+            <!-- Card for all employees in a team -->
+            <div class="col s6" id="team">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="table-responsive collection">
+                            <table class="table striped">
+                                <tr>
+                                    <th class="center black white-text" style="width: 200%;">
+                                        @Html.DisplayName("Equipo")
+                                    </th>
+                                </tr>
+                            </table>
+                            <table>
+
+                                <tbody>
+                                    @foreach (var team in ViewBag.cedula_empleadoFK as SelectList)
+
+                                    {
+                                        foreach (SelectListItem tester in cant_reqs)
+                                        {
+                                            if (tester.Value == team.Value)
+                                            {
+                                                req = tester.Text;
+                                                rol = "Tester";
+                                                color = "blue";
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                color = "red";
+                                                req = "0";
+                                                rol = "Líder";
+                                            }
+                                        }
+                                        <a href="javascript:setIdMember(@team.Value)" id="@team.Value" class="collection-item">
+                                            <span class="new badge @color" data-badge-caption="">@rol</span>@if (rol == "Tester")
+                                            {<span class="new badge" data-badge-caption="requerimientos"> @req</span>}@team.Text
+                                        </a>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row center">
+                        <button type="submit" id="desasignar" name="Deallocate" value="Deallocate" class="margin-l btn waves-effect waves-light turq white-text">Desasignar</button>
+                    </div>
+                    <div class="margin-b section">
+                    </div>
+                    @*<label id="Error" style="color: red; font-size: 19px; vertical-align: 30px; padding-left: 260px;">*El equipo tiene 5 miembros</label>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="btn-add" class="fixed-action-btn">
+        <a href="@Url.Action("Index", "Project/Index")" class="btn-floating btn-large black turq-hover left tooltipped" data-position="left" data-tooltip="Volver">
+            <i class="large material-icons">arrow_back</i>
+        </a>
+    </div>
+}
+<script>
+
+    /*
+     * Function that extracts the ID if you add a new member, actuated by selecting a member in the table
+     * Parameters: id, represents the ID of the selected employee
+     * Return: None
+     * */
+    function setIdNew(id) {
+        if ($('#IdNew').val() != "") {
+            $('#' + $('#IdNew').val()).removeClass("active");
+        }
+        $('#IdNew').val(id);
+        $('#' + id).addClass("active");
+    }
+
+    /*
+     * Function that extracts the ID if you delete a member in a team, actuated by selecting a member in the table
+     * Parameters: id, represents the ID of the selected employee
+     * Return: None
+     * */
+    function setIdMember(id) {
+        if ($('#IdMember').val() != "") {
+            $('#' + $('#IdMember').val()).removeClass("active");
+        }
+        $('#IdMember').val(id);
+        $('#' + id).addClass("active");
+    }
+
+    /*
+     * Function extract the skill inserted in the input, powered by submit
+     * Parameters: None
+     * Return: None
+     * */
+    function getAbility() {
+        $('#Ability').val(document.getElementById("ability").value);
+    }
+
+</script>
+
+@{
+    if (User.IsInRole("Cliente") || User.IsInRole("Tester"))
+    {
+        <script>
+            document.getElementById("employeesAvailable").classList.add("hide");
+            document.getElementById("desasignar").classList.add("hide");
+            document.getElementById("team").classList.remove("s6");
+            document.getElementById("team").classList.add("s8");
+            document.getElementById("team").classList.add("offset-s2");
+            document.getElementById("searchIcon").classList.add("hide");
+            document.getElementById("ability").classList.add("hide");
+            document.getElementById("searchButton").classList.add("hide");
+        </script>
+    }
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,85 @@
+﻿@using ControlCalidad.Models
+@model LoginViewModel
+
+<div class="row distance container section">
+    <div class="col s6 m6 offset-s3 offset-m3">
+        <section id="loginForm" class="card hoverable">
+            <nav>
+                <div class="nav-wrapper black">
+                    <p class="col s8"> Sign in</p>
+                    <p class="col s4">Quality Expert S.A</p>
+                </div>
+            </nav>
+
+            <div class="margin-b">
+
+            </div>
+         
+
+            <div class="card-content">
+                @using( Html.BeginForm( "Login" , "Account" , new {
+                    ReturnUrl = ViewBag.ReturnUrl
+                } , FormMethod.Post , new {
+                    @class = "form-horizontal" ,
+                    role = "form"
+                } ) )
+                {
+                    @Html.AntiForgeryToken( )
+                    <div class=" center">
+                        @Html.ValidationSummary(true, "", new { @class = "text-error"} )
+
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="text-grey material-icons prefix">mail</i>
+                            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+
+                            @Html.TextBoxFor(m => m.UserName , new { @class = "form-control validate"} )
+                            @Html.ValidationMessageFor(m => m.UserName , "", new { @class = "text-error"
+                       } )
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="text-grey material-icons prefix">lock</i>
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-error"
+                       } )
+                        </div>
+
+                    </div>
+
+                    <!--Descomentar en caso de necesitar-->
+                    @*
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor( m => m.RememberMe )
+                        @Html.LabelFor( m => m.RememberMe )
+                    </div>
+                </div>
+            </div>
+                    *@
+
+                    <div class="center">
+                        <button class="btn waves-effect waves-light turq btn-login" type="submit">
+                            LOGIN
+                        </button>
+                    </div>
+
+                    @* Enable this once you have account confirmation enabled for password reset functionality
+            <p>
+                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+            </p>*@
+                }
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render( "~/bundles/jqueryval" )
+}

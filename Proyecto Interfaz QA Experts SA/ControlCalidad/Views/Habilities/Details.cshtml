@@ -1,0 +1,84 @@
+﻿@model ControlCalidad.Models.Habilidade
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles de habilidad</h2>
+
+<div class="row">
+    <div class="col s8 offset-s2">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper black">
+                    <p class="col s4">Quality Expert S.A</p>
+                </div>
+            </nav>
+            <div class="card-content black-text">
+                <div class="row">
+
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">description</i>
+                                <span class="text-turq"> Categoria </span>
+                                : @Html.DisplayFor(model => model.categoriaPK)
+                            </p>
+                        </div>
+                        <div class="col s12 margin-b1">
+                            <p class="p-size">
+                                <i class="material-icons left text-grey">description</i>
+                                <span class="text-turq"> Descripcion </span>
+                                : @Html.DisplayFor(model => model.descripcionPK)
+                            </p>
+                        </div>
+
+
+
+                    
+
+                </div>
+            </div>
+            <div class="card-action center">
+                <a class="margin-r waves-effect btn red accent-4 red-hover modal-trigger" href="#modal1">Borrar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fixed-action-btn">
+    <a href="@Url.Action( "Index" , "Habilities/Index", new { cedula = Model.cedula_empleadoFK})" class="btn-floating btn-large black turq-hover left">
+        <i class="large material-icons">arrow_back</i>
+    </a>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+    <div class="row">
+        <div class="">
+            <nav>
+                <div class="nav-wrapper black">
+                    <p class="col s4 offset-s5">Quality Expert S.A</p>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="modal-content ">
+        <div class="row">
+            <div class="col s2">
+                <i class="material-icons medium red-text text-darken-4">warning</i>
+            </div>
+            <div class="s8">
+                <h5>Está seguro que desea <span class="red-text text-darken-4 "> borrar </span> esta habilidad ?</h5>
+            </div>
+        </div>
+
+        <div class="margin-b1">
+            <hr />
+        </div>
+        <div class="modal-footer">
+                @Html.ActionLink("Aceptar", "RemoveHability",  new { id = @Model.cedula_empleadoFK, category = @Model.categoriaPK, description = @Model.descripcionPK }, new { @class = "waves-effect red-hover btn red accent-4" })
+                <a class="modal-close btn waves-effect waves-light turq white-text">Cancelar</a>
+        </div>
+    </div>
+</div>

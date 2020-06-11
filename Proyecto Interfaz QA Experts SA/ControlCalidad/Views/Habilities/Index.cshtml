@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ControlCalidad.Models.Habilidade>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Habilidades de @ViewBag.employeeName</h2>
+
+<div class="fixed-action-btn">
+    <a href="@Url.Action( "Create New" , "Habilities/Create",new { cedula = ViewBag.empleado } )" class="btn-floating btn-large black turq-hover">
+        <i class="large material-icons">add</i>
+    </a>
+</div>
+
+<p>
+
+</p>
+<div class="card">
+
+    <table class="table striped">
+        <tr>
+            <th class="center black white-text">
+                @Html.DisplayName("Tipo de Habilidad")
+            </th>
+            <th class="center black white-text">
+                @Html.DisplayName("Habilidad")
+            </th>
+
+            <th class="center black white-text">
+                @Html.DisplayName("Accion")
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (item.cedula_empleadoFK == ViewBag.empleado)
+            {
+                <tr>
+                    <td class="center">
+                        @Html.DisplayFor(modelItem => item.categoriaPK)
+                    </td>
+                    <td class="center">
+                        @Html.DisplayFor(modelItem => item.descripcionPK)
+                    </td>
+                    <td class="center">
+                        @Html.ActionLink("Detalles", "Details", new { cedula_empleadoFK = item.cedula_empleadoFK, categoriaPK = item.categoriaPK, descripcionPK = item.descripcionPK }, new { @class = "waves-effect waves-light btn black turq-hover" })
+                        @*Html.ActionLink("Delete", "Delete", new { id = item.cedulaPK }) |*@
+
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+
+</div>
