@@ -6,14 +6,13 @@
 
 @{
 
-    if (User.IsInRole("Jefe"))
-    {
+    
         <h3>Registar Empleado</h3>
         <div class="row container">
             <div class="col s12">
                 <div class="card hoverable">
                     <nav>
-                        <div class="nav-wrapper black">
+                        <div class="nav-wrapper blue draken-3">
                             <p class="col s4">Quality Expert S.A</p>
                         </div>
                     </nav>
@@ -91,10 +90,7 @@
                             <div class="row margin-b">
                                 <div class="input-field col s11">
                                     <i class="text-grey material-icons prefix">place</i>
-                                    @if (ViewBag.provinces != null)
-                                    {
-                                        @Html.DropDownList("provincia", provinces, "Provincia")
-                                    }
+                                    @Html.DropDownListFor(model => model.distrito, new SelectList(" "), "Seleccione Provincia", new { @class = "form-control" })
                                 </div>
                             </div>
 
@@ -194,19 +190,6 @@
         </div><div>
             @Html.ActionLink("Back to List", "Index")
         </div>
-    }
-    else
-    {
-        <div class="row container center top-m-block">
-
-            <div class="card hoverable s10 section">
-
-                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para crear un empleado.</h3>
-                <i class="large material-icons red-text">block</i>
-
-            </div>
-        </div>
-    }
 
 }
 
