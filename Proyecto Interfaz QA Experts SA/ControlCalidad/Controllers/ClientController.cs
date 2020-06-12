@@ -14,9 +14,9 @@ namespace ControlCalidad.Controllers
 {
     public class ClientController : Controller
     {
-        private localizationsController localizations = new localizationsController( );
+        private localizationsController localizations = new localizationsController();
 
-        private QASystemEntities db = new QASystemEntities( );
+        private QASystemEntities db = new QASystemEntities();
         private static string editID;
         private static string mail;
 
@@ -26,25 +26,28 @@ namespace ControlCalidad.Controllers
         public List<SelectListItem> GetClients()
         {
             List<ClientForproject> clientsList =
-                ( from client in db.Clientes
-                  select new ClientForproject {
-                      cedulaPK = client.cedulaPK ,
-                      nombreP = client.nombreP ,
-                      apellido1 = client.apellido1 ,
-                      apellido2 = client.apellido2 ,
-                      nombreCompleto = client.nombreP + " " + client.apellido1 + " " + client.apellido2
+                (from client in db.Clientes
+                 select new ClientForproject
+                 {
+                     cedulaPK = client.cedulaPK,
+                     nombreP = client.nombreP,
+                     apellido1 = client.apellido1,
+                     apellido2 = client.apellido2,
+                     nombreCompleto = client.nombreP + " " + client.apellido1 + " " + client.apellido2
 
 
-                  } ).ToList( );
+                 }).ToList();
 
             List<SelectListItem> allClients = clientsList.ConvertAll(
-                client => {
-                    return new SelectListItem( ) {
-                        Text = client.nombreCompleto ,
-                        Value = client.cedulaPK.ToString( ) ,
+                client =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = client.nombreCompleto,
+                        Value = client.cedulaPK.ToString(),
                         Selected = false
                     };
-                } );
+                });
 
             return allClients;
         }
@@ -53,29 +56,29 @@ namespace ControlCalidad.Controllers
         public async Task<ActionResult> Index()
         {
 
-            return View( await db.Clientes.ToListAsync( ) );
+            return View(await db.Clientes.ToListAsync());
         }
 
         // GET: Client/Details/5
-        public async Task<ActionResult> Details( string id )
+        public async Task<ActionResult> Details(string id)
         {
-            if( id == null )
+            if (id == null)
             {
-                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = await db.Clientes.FindAsync( id );
-            if( cliente == null )
+            Cliente cliente = await db.Clientes.FindAsync(id);
+            if (cliente == null)
             {
-                return HttpNotFound( );
+                return HttpNotFound();
             }
-            return View( cliente );
+            return View(cliente);
         }
 
         // GET: Client/Create
         public ActionResult Create()
         {
-            ViewBag.provinces = this.localizations.provinceList( );
-            return View( );
+            ViewBag.provinces = this.localizations.provinceList();
+            return View();
 
         }
 
@@ -85,33 +88,33 @@ namespace ControlCalidad.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<ActionResult> Create( [Bind( Include = "cedulaPK,nombreP,apellido1,apellido2,telefono,correo,provincia,canton,distrito,direccionExacta,fechaNacimiento" )] Cliente cliente )
+        public async Task<ActionResult> Create([Bind(Include = "cedulaPK,nombreP,apellido1,apellido2,telefono,correo,provincia,canton,distrito,direccionExacta,fechaNacimiento")] Cliente cliente)
         {
-            string provinceName = localizations.provinceName( cliente.provincia );
-            string cantonName = localizations.cantonName( cliente.provincia , cliente.canton );
-            string districtName = localizations.districtName( cliente.provincia , cliente.canton , cliente.distrito );
+            string provinceName = localizations.provinceName(cliente.provincia);
+            string cantonName = localizations.cantonName(cliente.provincia, cliente.canton);
+            string districtName = localizations.districtName(cliente.provincia, cliente.canton, cliente.distrito);
             cliente.provincia = provinceName;
             cliente.canton = cantonName;
             cliente.distrito = districtName;
-            if( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
-                db.Clientes.Add( cliente );
+                db.Clientes.Add(cliente);
                 try
                 {
-                    await db.SaveChangesAsync( );
+                    await db.SaveChangesAsync();
                 }
 
                 catch
                 {
-                    ModelState.AddModelError( "" , "No pudo crear cliente" );
-                    return View( cliente );
+                    ModelState.AddModelError("", "No pudo crear cliente");
+                    return View(cliente);
 
                 }
-                return RedirectToAction( "Index" );
+                return RedirectToAction("Index");
 
             }
 
-            return View( cliente );
+            return View(cliente);
         }
 
         // GET: Client/Edit/5
@@ -139,7 +142,7 @@ namespace ControlCalidad.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<ActionResult> Edit( [Bind( Include = "cedulaPK,nombreP,apellido1,apellido2,telefono,correo,provincia,canton,distrito,direccionExacta,fechaNacimiento" )] Cliente cliente )
+        public async Task<ActionResult> Edit([Bind(Include = "cedulaPK,nombreP,apellido1,apellido2,telefono,correo,provincia,canton,distrito,direccionExacta,fechaNacimiento")] Cliente cliente)
         {
 
             var editProvince = "";
@@ -158,7 +161,7 @@ namespace ControlCalidad.Controllers
             {
                 editDistrict = Regex.Match(cliente.distrito, @"\d+").Value;
             }
-            
+
 
             string provinceName = null;
             string cantonName = null;
@@ -185,60 +188,61 @@ namespace ControlCalidad.Controllers
                 cliente.distrito = districtName;
             }
 
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 db.Edit_Cliente(editID, cliente.cedulaPK, cliente.nombreP, cliente.apellido1, cliente.apellido2,
                                  cliente.telefono, cliente.correo, cliente.provincia,
                                  cliente.canton, cliente.distrito, cliente.direccionExacta, cliente.fechaNacimiento);
 
 
-                return RedirectToAction("Edit", new {id=cliente.cedulaPK});
+                return RedirectToAction("Edit", new { id = cliente.cedulaPK });
             }
-            return View( cliente );
+            return View(cliente);
         }
 
 
         // GET: Client/Delete/5
-        public async Task<ActionResult> Delete( string id )
+        public async Task<ActionResult> Delete(string id)
         {
-            if( id == null )
+            if (id == null)
             {
-                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = await db.Clientes.FindAsync( id );
-            if( cliente == null )
+            Cliente cliente = await db.Clientes.FindAsync(id);
+            if (cliente == null)
             {
-                return HttpNotFound( );
+                return HttpNotFound();
             }
-            return View( cliente );
+            return View(cliente);
         }
 
         // POST: Client/Delete/5
-        [HttpPost, ActionName( "Delete" )]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed( string id )
+        public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            Cliente cliente = await db.Clientes.FindAsync( id );
-            db.Clientes.Remove( cliente );
-            await db.SaveChangesAsync( );
-            return RedirectToAction( "Index" );
+            Cliente cliente = await db.Clientes.FindAsync(id);
+            db.Clientes.Remove(cliente);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         //<summary> :   It is used to remove a client from the database.
         //<param>   :   clientID, this parameter identifies the client that will be removed from the database. 
         //<return>  :   Redirect to Index.
-        public ActionResult RemoveClient( string clientId )
+        public ActionResult RemoveClient(string clientId)
         {
-            Cliente client = db.Clientes.Find( clientId );
-            db.Clientes.Remove( client );
-            db.SaveChanges( );
-            return RedirectToAction( "Index" );
+            Cliente client = db.Clientes.Find(clientId);
+            db.Clientes.Remove(client);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         //<summary> :   Returns de id of a client associated to the email given.
         //<param>   :   string email:   The email of the client.
         //<return>  :   The id of a client.
-        public string GetClientIdByEmail(string email) {
+        public string GetClientIdByEmail(string email)
+        {
             string id;
 
             List<Cliente> client = db.Clientes.Where(c => c.correo.Equals(email)).ToList();
@@ -246,21 +250,22 @@ namespace ControlCalidad.Controllers
             {
                 id = client[0].cedulaPK;
             }
-            else {
+            else
+            {
                 id = "";
             }
-            
+
 
             return id;
         }
 
-        protected override void Dispose( bool disposing )
+        protected override void Dispose(bool disposing)
         {
-            if( disposing )
+            if (disposing)
             {
-                db.Dispose( );
+                db.Dispose();
             }
-            base.Dispose( disposing );
+            base.Dispose(disposing);
         }
 
         //<summary> : This method is used to know if one email has been taken from another client or employee.
@@ -268,9 +273,12 @@ namespace ControlCalidad.Controllers
         //<return>  : Returns a boolean value, true if the email was taken, false the otherwise.
         public bool isMailTaken(string input)
         {
-            if (mail == input) {
+            if (mail == input)
+            {
                 return false;
-            }else{
+            }
+            else
+            {
                 var exist = db.Clientes.Any(x => x.correo == input);
                 return exist;
 

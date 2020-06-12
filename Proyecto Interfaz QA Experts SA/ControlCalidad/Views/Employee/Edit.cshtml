@@ -2,16 +2,12 @@
 
 @{
     ViewBag.Title = "Edit";
-    List<SelectListItem> provinces = (List<SelectListItem>)ViewBag.provinces;
     
 }
 
 
 @{
-
-    if (User.IsInRole("Jefe"))
-    {
-        <h3>Editar informacion de Empleado</h3>
+        <h3 class="text-black-50">Editar informacion de Empleado</h3>
 
 
         using (Html.BeginForm())
@@ -20,7 +16,7 @@
                 <div class="col s12">
                     <div class="card hoverable">
                         <nav>
-                            <div class="nav-wrapper black">
+                            <div class="nav-wrapper blue draken-3">
                                 <p class="col s4">Quality Expert S.A</p>
                             </div>
                         </nav>
@@ -50,8 +46,8 @@
                             <div class="row margin-b center">
                                 <div class="input-field col  s12">
                                     <i class="p-size material-icons text-grey prefix">date_range</i>
-                                    <label for="fechaInicio">Fecha de nacimiento</label>
-                                    <input type="text" class="datepickerAge datepicker" id="fechaNacimiento" name="fechaNacimiento"  value = @Model.fechaNacimiento/>
+                                    <label for="fechaNacimiento">Fecha de nacimiento</label>
+                                    <input type="text" class="datepickerAge datepicker" id="fechaNacimiento" name="fechaNacimiento"/>
                                    
                                     @Html.ValidationMessageFor(model => model.fechaNacimiento, "", new { @class = "text-error" })
                                 </div>
@@ -98,7 +94,7 @@
                                     <i class="text-grey material-icons prefix">place</i>
                                     <select id="provincia" name="provincia">
 
-                                        <option value="@Model.provincia">@Model.provincia</option>
+                                        <option value="Provincia">Provincia</option>
                                     </select>
                                     <label for="provincia">provincia </label>
                                 </div>
@@ -134,7 +130,7 @@
                                     <i class="text-grey material-icons prefix">place</i>
                                     <select id="canton" name="canton">
 
-                                        <option value="@Model.canton">@Model.canton</option>
+                                        <option value="Canton">Cantón</option>
                                     </select>
                                     <label for="canton">Canton </label>
                                 </div>
@@ -169,7 +165,7 @@
                                     <i class="text-grey material-icons prefix">place</i>
                                     <select id="distrito" name="distrito">
 
-                                        <option value="@Model.distrito">@Model.distrito</option>
+                                        <option value="Distrito">Distrito</option>
                                     </select>
                                     <label for="distrito">Distrito </label>
                                 </div>
@@ -212,19 +208,7 @@
                 <i class="large material-icons">arrow_back</i>
             </a>
         </div>
-    }
-    else
-    {
-        <div class="row container center top-m-block">
-
-            <div class="card hoverable s10 section">
-
-                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para editar un empleado.</h3>
-                <i class="large material-icons red-text">block</i>
-
-            </div>
-        </div>
-    }
+    
 
 }
 
@@ -250,7 +234,7 @@
                         $('select').formSelect();
                     });
 
-                $.get("/localizations/provinceID", { name: '@Model.provincia' }, function (data) {
+                $.get("/localizations/provinceID", { name: 'Provincia' }, function (data) {
                         provinceID = data;
                         $.get("/localizations/cantonesList", { provincia: data }, function (data2) {
                             $.each(data2, function (index, row) {
@@ -259,7 +243,7 @@
                             $('select').formSelect();
                         });
                     });
-                $.get("/localizations/cantonID", { name: '@Model.provincia', canton: '@Model.canton' }, function (data3) {
+                $.get("/localizations/cantonID", { name: 'Provincia', canton: 'Canton' }, function (data3) {
                     cantonID = data3;
                     $.get("/localizations/districtsList", { provincia: provinceID, canton : cantonID }, function (data4) {
                             $.each(data4, function (index, row) {
