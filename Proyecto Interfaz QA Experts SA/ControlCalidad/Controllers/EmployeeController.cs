@@ -23,9 +23,9 @@ namespace ControlCalidad.Controllers
         // GET: Employee
         public async Task<ActionResult> Index()
         {
-            var empleadoes = db.Empleadoes.Include(e => e.Tester);
+            
            
-            return View(await empleadoes.ToListAsync());
+            return View();
         }
 
         // GET: Employee/Details/5

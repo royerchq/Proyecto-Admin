@@ -1,19 +1,15 @@
-﻿@model IEnumerable<ControlCalidad.Models.Empleado>
-
+﻿
 @{
     ViewBag.Title = "Index";
 }
 
 @{
 
-    if( !User.IsInRole( "Tester" ) )
-    {
-
-        <h3 class="text-grey">Empleados</h3>
+        <h3 class="text-black-50">Empleados</h3>
 
 
         <div class="fixed-action-btn">
-            <a id="add-btn" href="@Url.Action("Create New", "Employee/Create")" class="btn-floating btn-large turq red-hover">
+            <a id="add-btn" href="@Url.Action("Create New", "Employee/Create")" class="btn-floating btn-large blue draken-3 red-hover">
                 <i class="large material-icons">add</i>
             </a>
         </div>
@@ -21,92 +17,66 @@
 
         <div class="card">
 
-            <table class="table striped">
+            <table class="highlight">
                 <tr>
-                    <th class="center black white-text">
+                    <th class="center blue draken-3 white-text">
                         @Html.DisplayName( "Nombre" )
                     </th>
-                    <th class="center black white-text">
+                    <th class="center blue draken-3 white-text">
                         @Html.DisplayName( "Apellido" )
                     </th>
-                    <th class="center black white-text">
+                    <th class="center blue draken-3 white-text">
                         @Html.DisplayName( "Telefono" )
                     </th>
-                    <th class="center black white-text">
+                    <th class="center blue draken-3 white-text">
                         @Html.DisplayName( "Correo" )
                     </th>
-                    <th class="center black white-text">
+                    <th class="center blue draken-3 white-text">
                         @Html.DisplayName( "Direccion exacta" )
                     </th>
-                    <th class="center black white-text">
+                    <th class="center blue draken-3 white-text">
                         @Html.DisplayName( "Disponibilidad" )
                     </th>
-                    <th class="center black white-text">
+                    <th class="center blue draken-3 white-text">
                         @Html.DisplayName( "Accion" )
                     </th>
                     <thth class="center black white-text"></thth>
                 </tr>
 
-                @foreach( var item in Model )
-                {
+
                     <tr>
                         <td class="center">
-                            @Html.DisplayFor( modelItem => item.nombreP )
+                           g
                         </td>
                         <td class="center">
-                            @Html.DisplayFor( modelItem => item.apellido1 )
+                          g
                         </td>
 
                         <td class="center">
-                            @Html.DisplayFor( modelItem => item.telefono )
+                           g
                         </td>
                         <td class="center">
-                            @Html.DisplayFor( modelItem => item.correo )
+                            g
                         </td>
                         <td class="center">
-                            @Html.DisplayFor( modelItem => item.direccionExacta )
+                           g
                         </td>
                         <td class="center">
-                            @Html.DisplayFor( modelItem => item.disponibilidad )
+                            g
                         </td>
                         <td class="center">
                             @*Html.ActionLink("Edit", "Edit", new { id = item.cedulaPK }) |*@
-                            @Html.ActionLink("Detalles", "Details", new { id = item.cedulaPK }, new { @class = "waves-effect waves-light btn-small black turq-hover" })
+                            @Html.ActionLink("Detalles", "Details", new { }, new { @class = "waves-effect waves-light btn-small blue draken-3 turq-hover" })
                             @*Html.ActionLink("Delete", "Delete", new { id = item.cedulaPK }) |*@
-                            @Html.ActionLink("Habilidades", "../Habilities/Index", new { cedula_empleado = item.cedulaPK }, new { @class = "waves-effect waves-light btn-small black turq-hover" })
+                            @Html.ActionLink("Habilidades", "../Habilities/Index", new {  }, new { @class = "waves-effect waves-light btn-small blue draken-3 turq-hover" })
                         </td>
                     </tr>
-                }
+                
 
             </table>
 
         </div>
 
-    }
-    else
-    {
-        <div class="row container center top-m-block">
-
-            <div class="card hoverable s10 section">
-
-                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe o lider </span> para ingresar a la sección de empleados.</h3>
-                <i class="large material-icons red-text">block</i>
-
-            </div>
-        </div>
-    }
-
-}
-
-@{
-
-
-    if( User.IsInRole( "Lider" ) || User.IsInRole( "Cliente" ) )
-    {
-        <script>
-            document.getElementById("add-btn").classList.add("hide");
-        </script>
-    }
-
+ 
 
 }

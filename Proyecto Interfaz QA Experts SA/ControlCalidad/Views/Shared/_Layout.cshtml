@@ -20,30 +20,23 @@
 </head>
 <body class="">
     <nav>
-        <div class="nav-wrapper black">
+        <div class="nav-wrapper blue darken-3">
             <ul class="right hide-on-med-and-down">
                 <li><a class="turq-hover" href=" @Url.Action( "Index" , "Home" )">Inicio</a></li>
                 @{
-                    if (User.IsInRole("Jefe") || User.IsInRole("Tester") || User.IsInRole("Lider") || User.IsInRole("Cliente"))
-                    {
+                   
                         <li><a class="turq-hover" href="@Url.Action( "Index" , "Project" )">Proyectos</a></li>
 
-                        if (User.IsInRole("Jefe") || User.IsInRole("Lider") || User.IsInRole("Cliente"))
-                        {
+                     
                             <li><a class="turq-hover" href=" @Url.Action( "Index" , "Employee" )">Empleados</a></li>
 
-                            if (User.IsInRole("Jefe") || User.IsInRole("Lider"))
-                            {
-                                <li><a class="turq-hover" href=" @Url.Action( "Index" , "Reports" )">Reportes</a></li>
-                                if (User.IsInRole("Jefe"))
-                                {
+                           <li><a class="turq-hover" href=" @Url.Action( "Index" , "Reports" )">Reportes</a></li>
+                               
                                     <li><a class="turq-hover" href=" @Url.Action("Index", "Client")">Clientes</a></li>
 
                                     <li><a class="turq-hover" href=" @Url.Action("Index", "LoginUsers")">Perfiles</a></li>
-                                }
-                            }
-                        }
-                    }
+                      
+                    
                 }
 
                 <li>@Html.Partial("_LoginPartial") </li>
@@ -54,12 +47,12 @@
     <div class="footer-down">
         @RenderBody()
     </div>
-    <footer class="page-footer grey darken-2">
+    <footer class="page-footer blue darken-4">
 
         <div class="footer-copyright">
             <div class="row container">
                 <div class="col s6">
-                    ©Creado por DREAM TEAM PI
+                    ©Creado por Teletubbies en Velcro
                 </div>
                 <div class=" col s3 offset-s3">
                     @{var date = System.DateTime.Now;
