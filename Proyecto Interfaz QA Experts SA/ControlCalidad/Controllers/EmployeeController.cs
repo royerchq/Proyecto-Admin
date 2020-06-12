@@ -29,28 +29,15 @@ namespace ControlCalidad.Controllers
         }
 
         // GET: Employee/Details/5
-        public async Task<ActionResult> Details(string id)
+        public  ActionResult Details(string id)
         {
-
-            db.USP_calcularEdadEmpleado( id );
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Empleado empleado = await db.Empleadoes.FindAsync(id);
-            DateTime dateOfBirth = (DateTime)empleado.fechaNacimiento;
-            ViewBag.dateOfBirth = dateOfBirth.ToShortDateString();
-            if (empleado == null)
-            {
-                return HttpNotFound();
-            }
-            return View(empleado);
+            return View();
         }
 
         // GET: Employee/Create
         public ActionResult Create()
         {
-            
+            ViewBag.provinces = this.localizations.provinceList();
             ViewBag.cedulaPK = new SelectList(db.Testers, "cedula_empleadoFk", "cedula_empleadoFk");
             return View();
         }
@@ -170,18 +157,9 @@ namespace ControlCalidad.Controllers
         }
 
         // GET: Employee/Delete/5
-        public async Task<ActionResult> Delete(string id)
+        public ActionResult Delete(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Empleado empleado = await db.Empleadoes.FindAsync(id);
-            if (empleado == null)
-            {
-                return HttpNotFound();
-            }
-            return View(empleado);
+            return View();
         }
 
         // POST: Employee/Delete/5
@@ -189,17 +167,11 @@ namespace ControlCalidad.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            Empleado empleado = await db.Empleadoes.FindAsync(id);
-            db.Empleadoes.Remove(empleado);
-            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         public ActionResult RemoveEmployee(string employeeId)
         {
-            Empleado employee = db.Empleadoes.Find(employeeId);
-            db.Empleadoes.Remove(employee);
-            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
