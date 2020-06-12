@@ -3,10 +3,6 @@
 @*{
         ViewBag.Title = "Details";
     }*@
-
-
-
-
 @{
 
     string dateOfBirth = ViewBag.dateOfBirth;
@@ -17,7 +13,7 @@
         <div class="col s8 offset-s2">
             <div class="card hoverable">
                 <nav>
-                    <div class="nav-wrapper black">
+                    <div class="nav-wrapper blue draken-3">
                         <p class="col s4">Quality Expert S.A</p>
                     </div>
                 </nav>
@@ -28,7 +24,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">description</i>
                                     <span class="text-turq"> Nombre de empleado </span>
-                                    : @Html.DisplayFor(model => model.nombreP)
+                                    : @Html.DisplayName("Roger")
                                 </p>
                             </div>
 
@@ -36,7 +32,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">description</i>
                                     <span class="text-turq"> Primer apellido  </span>
-                                    : @Html.DisplayFor(model => model.apellido1)
+                                    : @Html.DisplayName("Chacon")
                                 </p>
                             </div>
 
@@ -44,7 +40,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">person</i>
                                     <span class="text-turq"> Segundo apellido  </span>
-                                    : @Html.DisplayFor(model => model.apellido2)
+                                    : @Html.DisplayName("Quintero")
                                 </p>
                             </div>
 
@@ -52,7 +48,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">perm_identity</i>
                                     <span class="text-turq"> Cédula  </span>
-                                    : @Html.DisplayFor(model => model.cedulaPK)
+                                    : @Html.DisplayName("112341234")
                                 </p>
                             </div>
 
@@ -60,7 +56,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">person</i>
                                     <span class="text-turq">Fecha de nacimiento  </span>
-                                    : @Html.DisplayName( dateOfBirth )
+                                    : @Html.DisplayName("12/12/1999")
                                 </p>
                             </div>
 
@@ -68,7 +64,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">person</i>
                                     <span class="text-turq"> Edad  </span>
-                                    : @Html.DisplayFor(model => model.edad)
+                                    : @Html.DisplayName("20")
                                 </p>
                             </div>
 
@@ -76,7 +72,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">call</i>
                                     <span class="text-turq"> Telefono  </span>
-                                    : @Html.DisplayFor(model => model.telefono)
+                                    : @Html.DisplayName("8746934")
                                 </p>
                             </div>
 
@@ -88,7 +84,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">person</i>
                                     <span class="text-turq"> Disponibilidad </span>
-                                    : @Html.DisplayFor(model => model.disponibilidad)
+                                    : @Html.DisplayName("Disponible")
                                 </p>
                             </div>
 
@@ -96,7 +92,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">mail</i>
                                     <span class="text-turq"> Correo </span>
-                                    : @Html.DisplayFor(model => model.correo)
+                                    : @Html.DisplayName("royerchq2014@gmail.com")
                                 </p>
                             </div>
 
@@ -104,7 +100,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">place</i>
                                     <span class="text-turq"> Provincia  </span>
-                                    : @Html.DisplayFor(model => model.provincia)
+                                    : @Html.DisplayName("Alajuela")
                                 </p>
                             </div>
 
@@ -112,7 +108,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">place</i>
                                     <span class="text-turq"> Canton  </span>
-                                    : @Html.DisplayFor(model => model.canton)
+                                    : @Html.DisplayName("Atenas")
                                 </p>
                             </div>
 
@@ -120,7 +116,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">place</i>
                                     <span class="text-turq"> Distrito  </span>
-                                    : @Html.DisplayFor(model => model.distrito)
+                                    : @Html.DisplayName("Atenas")
                                 </p>
                             </div>
 
@@ -128,7 +124,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">place</i>
                                     <span class="text-turq"> Direccion exacta  </span>
-                                    : @Html.DisplayFor(model => model.direccionExacta)
+                                    : @Html.DisplayName("Atenas, Alajuela")
                                 </p>
                             </div>
 
@@ -138,7 +134,7 @@
                 </div>
                 <div class="card-action center">
                     <a id="delete-btn" class="margin-r waves-effect btn red accent-4 red-hover modal-trigger" href="#modal1">Borrar</a>
-                    @Html.ActionLink("Editar", "Edit", new { id = Model.cedulaPK }, new
+                    @Html.ActionLink("Editar", "Edit", new { id = 1 }, new
                     {
                    @class = " margin-l waves-effect waves-light btn turq",
                         @id = "edit-btn"
@@ -164,7 +160,7 @@
     <div class="row">
         <div class="">
             <nav>
-                <div class="nav-wrapper black">
+                <div class="nav-wrapper blue draken-3">
                     <p class="col s4 offset-s5">Quality Expert S.A</p>
                 </div>
             </nav>
@@ -177,7 +173,7 @@
                 <i class="material-icons medium red-text text-darken-4">warning</i>
             </div>
             <div class="s8">
-                <h5>Está seguro que desea <span class="red-text text-darken-4 "> borrar </span> al empleado  @Model.nombreP ?</h5>
+                <h5>Está seguro que desea <span class="red-text text-darken-4 "> borrar </span> al empleado Roger Chacon ?</h5>
             </div>
         </div>
 
@@ -186,7 +182,7 @@
         </div>
         <div class="modal-footer">
 
-            @Html.ActionLink("Aceptar", "RemoveEmployee", null, new { employeeId = Model.cedulaPK }, new { @class = "waves-effect red-hover btn red accent-4" })
+            @Html.ActionLink("Aceptar", "RemoveEmployee", null, new { employeeId = 1 }, new { @class = "waves-effect red-hover btn red accent-4" })
             <a class="modal-close btn waves-effect waves-light turq white-text">Cancelar</a>
         </div>
     </div>

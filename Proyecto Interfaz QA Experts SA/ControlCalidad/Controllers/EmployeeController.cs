@@ -37,7 +37,8 @@ namespace ControlCalidad.Controllers
         // GET: Employee/Create
         public ActionResult Create()
         {
-           
+            ViewBag.provinces = this.localizations.provinceList();
+            ViewBag.cedulaPK = new SelectList(db.Testers, "cedula_empleadoFk", "cedula_empleadoFk");
             return View();
         }
 
@@ -71,9 +72,8 @@ namespace ControlCalidad.Controllers
         //}
 
         // GET: Employee/Delete/5
-        public async Task<ActionResult> Delete()
+        public ActionResult Delete(string id)
         {
-           
             return View();
         }
 
