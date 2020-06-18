@@ -120,19 +120,8 @@ namespace ControlCalidad.Controllers
         // GET: Client/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
-            ViewBag.provinces = this.localizations.provinceList();
-            editID = string.Copy(id);
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            mail = cliente.correo;
-            if (cliente == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cliente);
+
+            return View();
 
         }
 
@@ -145,58 +134,6 @@ namespace ControlCalidad.Controllers
         public async Task<ActionResult> Edit([Bind(Include = "cedulaPK,nombreP,apellido1,apellido2,telefono,correo,provincia,canton,distrito,direccionExacta,fechaNacimiento")] Cliente cliente)
         {
 
-            var editProvince = "";
-            var editCanton = "";
-            var editDistrict = "";
-
-            if (cliente.provincia != null)
-            {
-                editProvince = Regex.Match(cliente.provincia, @"\d+").Value;
-            }
-            if (cliente.provincia != null)
-            {
-                editCanton = Regex.Match(cliente.canton, @"\d+").Value;
-            }
-            if (cliente.provincia != null)
-            {
-                editDistrict = Regex.Match(cliente.distrito, @"\d+").Value;
-            }
-
-
-            string provinceName = null;
-            string cantonName = null;
-            string districtName = null;
-            string provinceID = null;
-
-            if (editProvince != "")
-            {
-                provinceName = localizations.provinceName(cliente.provincia);
-                cliente.provincia = provinceName;
-
-            }
-            if (editCanton != "")
-            {
-                provinceID = this.localizations.provinceID(provinceName).ToString();
-                cantonName = localizations.cantonName(provinceID, cliente.canton);
-                cliente.canton = cantonName;
-
-            }
-            if (editDistrict != "")
-            {
-                string cantonID = this.localizations.cantonID(provinceName, cliente.canton).ToString();
-                districtName = localizations.districtName(provinceID, cantonID, cliente.distrito);
-                cliente.distrito = districtName;
-            }
-
-            if (ModelState.IsValid)
-            {
-                db.Edit_Cliente(editID, cliente.cedulaPK, cliente.nombreP, cliente.apellido1, cliente.apellido2,
-                                 cliente.telefono, cliente.correo, cliente.provincia,
-                                 cliente.canton, cliente.distrito, cliente.direccionExacta, cliente.fechaNacimiento);
-
-
-                return RedirectToAction("Edit", new { id = cliente.cedulaPK });
-            }
             return View(cliente);
         }
 

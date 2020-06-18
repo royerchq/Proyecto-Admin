@@ -52,9 +52,6 @@ namespace ControlCalidad.Controllers
         // GET: Test/Create
         public ActionResult Create(int? requirementId, int? projectId)
         {
-            ViewBag.requirementId = requirementId;
-            ViewBag.projectId = projectId;
-            ViewBag.id_requerimientoFK = new SelectList(db.Requerimientoes, "idPK", "nombre");
             return View();
         }
 

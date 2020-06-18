@@ -6,10 +6,7 @@
 }
 
 @{
-
-    if (User.IsInRole("Jefe"))
-    {
-        <h3 class="text-grey">Editar Cliente</h3>
+   <h3 class="text-black-50">Editar Cliente</h3>
         <div class="margin-b1">
             <hr />
         </div>
@@ -19,7 +16,7 @@
                 <div class="card hoverable">
 
                     <nav>
-                        <div class="nav-wrapper black">
+                        <div class="nav-wrapper blue draken-3">
                             <p class="col s4">Quality Expert S.A</p>
                         </div>
                     </nav>
@@ -66,7 +63,7 @@
                                         <i class="text-grey material-icons prefix">place</i>
                                         <select id="provincia" name="provincia">
 
-                                                <option value="@Model.provincia">@Model.provincia</option>
+                                                <option value="provincia">Provincia</option>
                                             </select>
                                             <label for="provincia">Provincia</label>
                                         @*@Html.DropDownListFor(model => model.provincia, new SelectList(" "), new { @class = "form-control", @id = "provincia" })*@
@@ -101,7 +98,7 @@
                                         <i class="text-grey material-icons prefix">place</i>
                                         <select id="canton" name="canton">
 
-                                                <option value="@Model.canton">@Model.canton</option>
+                                                <option value="canton">Cantón</option>
                                             </select>
                                             <label for="canton">Cantón</label>
                                         @*@Html.DropDownListFor(model => model.canton, new SelectList(" "), new { @class = "form-control", @id = "canton" })*@
@@ -136,7 +133,7 @@
                                         <i class="text-grey material-icons prefix">place</i>
                                         <select id="distrito" name="distrito">
 
-                                                <option value="@Model.distrito">@Model.distrito</option>
+                                                <option value="distrito">Distrito</option>
                                             </select>
                                             <label for="distrito">Distrito</label>
                                         @*@Html.DropDownListFor(model => model.distrito, new SelectList(" "), new { @class = "form-control", @id = "distrito" })*@
@@ -212,19 +209,7 @@
                 <i class="large material-icons">arrow_back</i>
             </a>
         </div>
-    }
-    else
-    {
-        <div class="row container center top-m-block">
-
-            <div class="card hoverable s10 section">
-
-                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para editar un cliente.</h3>
-                <i class="large material-icons red-text">block</i>
-
-            </div>
-        </div>
-    }
+   
 
 }
 
@@ -250,7 +235,7 @@
                         $('select').formSelect();
                     });
 
-                    $.get("/localizations/provinceID", { name: '@Model.provincia' }, function (data) {
+                    $.get("/localizations/provinceID", { name: 'provincia' }, function (data) {
                             provinceID = data;
                             $.get("/localizations/cantonesList", { provincia: data }, function (data2) {
                                 $.each(data2, function (index, row) {
@@ -260,7 +245,7 @@
                             });
                     });
 
-                    $.get("/localizations/cantonID", { name: '@Model.provincia', canton: '@Model.canton' }, function (data3) {
+                    $.get("/localizations/cantonID", { name: 'provincia', canton: 'canton' }, function (data3) {
                         cantonID = data3;
                         $.get("/localizations/districtsList", { provincia: provinceID, canton : cantonID }, function (data4) {
                                 $.each(data4, function (index, row) {
