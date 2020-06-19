@@ -62,16 +62,8 @@ namespace ControlCalidad.Controllers
         // GET: Client/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            if (cliente == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cliente);
+            
+            return View();
         }
 
         // GET: Client/Create
@@ -141,16 +133,7 @@ namespace ControlCalidad.Controllers
         // GET: Client/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            if (cliente == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cliente);
+            return View();
         }
 
         // POST: Client/Delete/5
@@ -158,9 +141,6 @@ namespace ControlCalidad.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            db.Clientes.Remove(cliente);
-            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -169,9 +149,6 @@ namespace ControlCalidad.Controllers
         //<return>  :   Redirect to Index.
         public ActionResult RemoveClient(string clientId)
         {
-            Cliente client = db.Clientes.Find(clientId);
-            db.Clientes.Remove(client);
-            db.SaveChanges();
             return RedirectToAction("Index");
         }
 

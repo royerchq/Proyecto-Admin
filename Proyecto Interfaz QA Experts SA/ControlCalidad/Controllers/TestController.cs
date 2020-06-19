@@ -25,19 +25,9 @@ namespace ControlCalidad.Controllers
         }
 
         // GET: Test/Details/5
-        public async Task<ActionResult> Details(int? id, int? projectID, int? requirementID)
+        public ActionResult Details(int? id, int? projectID, int? requirementID)
         {
-            
-            if (id == null || projectID == null || requirementID == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Prueba prueba = await db.Pruebas.FindAsync( id,  projectID,  requirementID);
-            if (prueba == null)
-            {
-                return HttpNotFound();
-            }
-            return View(prueba);
+            return View();
         }
 
         // GET: Test/Create
@@ -67,7 +57,7 @@ namespace ControlCalidad.Controllers
         }
 
         // GET: Test/Edit/5
-        public async Task<ActionResult> Edit(int? id, int? projectID, int? requirementID)
+        public ActionResult Edit(int? id, int? projectID, int? requirementID)
         {
            
             return View();
@@ -91,37 +81,22 @@ namespace ControlCalidad.Controllers
         }
 
         // GET: Test/Delete/5
-        public async Task<ActionResult> Delete(int? id, int? projectID, int? requirementID)
+        public ActionResult Delete(int? id, int? projectID, int? requirementID)
         {
-            if (id == null || projectID == null || requirementID == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Prueba prueba = await db.Pruebas.FindAsync( id,  projectID,  requirementID);
-            if (prueba == null)
-            {
-                return HttpNotFound();
-            }
-            return View(prueba);
+            return View();
         }
 
         // POST: Test/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Prueba prueba = await db.Pruebas.FindAsync(id);
-            db.Pruebas.Remove(prueba);
-            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         public ActionResult RemoveTest(int? id, int project, int requirement)
         {
-            Prueba prueba = db.Pruebas.Find(id, project, requirement);
-            db.Pruebas.Remove(prueba);
-            db.SaveChanges();
-            return RedirectToAction("Index", new { id = prueba.id_requerimientoFK, projectId = prueba.id_proyectoFK });
+            return RedirectToAction("Index", new { id = 1, projectId = 1 });
         }
 
         protected override void Dispose(bool disposing)

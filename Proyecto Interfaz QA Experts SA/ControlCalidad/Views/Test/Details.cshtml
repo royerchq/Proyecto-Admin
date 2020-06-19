@@ -15,7 +15,7 @@
         <div class="col s12">
             <div class="card hoverable">
                 <nav>
-                    <div class="nav-wrapper black">
+                    <div class="nav-wrapper blue draken-3">
                         <p class="col s4">Quality Expert S.A</p>
                     </div>
                 </nav>
@@ -26,14 +26,14 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">assignment_ind</i>
                                     <span class="text-turq"> Nombre </span>
-                                    : @Html.DisplayFor(model => model.nombre)
+                                    : Test de Funcionalidad
                                 </p>
                             </div>
                             <div class="col s12 margin-b1">
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">border_color</i>
                                     <span class="text-turq"> Detalle de resultado </span>
-                                    : @Html.DisplayFor(model => model.detalleResultado)
+                                    : Paso todos los tests
                                 </p>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">info</i>
                                     <span class="text-turq"> Resultado Final </span>
-                                    : @Html.DisplayFor(model => model.resultadoFinal)
+                                    : Exitosa
                                 </p>
                             </div>
 
@@ -52,7 +52,7 @@
                 </div>
                 <div class="card-action center" id="testDetailsOpts">
                     <a id="delete-btn" class="margin-r waves-effect btn red accent-4 red-hover modal-trigger" href="#modal1">Borrar</a>
-                    @Html.ActionLink("Editar", "Edit", new { id = Model.idPK, projectID = Model.id_proyectoFK, requirementID = Model.id_requerimientoFK }, new
+                    @Html.ActionLink("Editar", "Edit", new { id = 1, projectID = 1, requirementID = 1 }, new
                {
                    @class = " margin-l waves-effect waves-light btn turq",
                    @id = "edit-btn"
@@ -63,7 +63,7 @@
     </div>
 
     <div class="fixed-action-btn">
-        <a href="@Url.Action("Index", new { id = Model.id_requerimientoFK, projectId = Model.id_proyectoFK })" class="btn-floating btn-large black turq-hover left tooltipped"
+        <a href="@Url.Action("Index", new { id = 1, projectId = 1 })" class="btn-floating btn-large black turq-hover left tooltipped"
            data-position="left" data-tooltip="Volver">
             <i class="large material-icons">arrow_back</i>
         </a>
@@ -74,7 +74,7 @@
         <div class="row">
             <div class="">
                 <nav>
-                    <div class="nav-wrapper black">
+                    <div class="nav-wrapper blue draken-3">
                         <p class="col s4 offset-s5">Quality Expert S.A</p>
                     </div>
                 </nav>
@@ -97,7 +97,7 @@
             <div class="modal-footer">
 
                 <a class="modal-close btn red-hover  red accent-4 white-text">Cancelar</a>
-                @Html.ActionLink("Aceptar", "RemoveTest", new { id = Model.idPK, project = Model.id_proyectoFK, requirement = Model.id_requerimientoFK }, new { @class = "modal-close btn waves-effect waves-light turq white-text" })
+                @Html.ActionLink("Aceptar", "RemoveTest", new { id = 1, project = 1, requirement = 1 }, new { @class = "modal-close btn waves-effect waves-light turq white-text" })
 
             </div>
         </div>
