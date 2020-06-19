@@ -1,15 +1,14 @@
 ﻿@model ControlCalidad.Models.Cliente
 @{
     ViewBag.Title = "Create";
-    List<SelectListItem> provinces = (List<SelectListItem>)ViewBag.provinces;
+   
 }
 
 @{
-    if (User.IsInRole("Jefe"))
-    {
-        <h3 class="text-grey">Agregar Cliente</h3>
+    
+        <h3>Registrar Cliente</h3>
         <div class="margin-b1">
-            <hr />
+        
         </div>
 
         <div class="row container ">
@@ -17,7 +16,7 @@
                 <div class="card hoverable">
 
                     <nav>
-                        <div class="nav-wrapper black">
+                        <div class="nav-wrapper blue draken-3">
                             <p class="col s4">Quality Expert S.A</p>
                         </div>
                     </nav>
@@ -64,10 +63,8 @@
                                 <div class="row margin-b">
                                     <div class="input-field col s10 offset-s1">
                                         <i class="p-size text-grey material-icons prefix">place</i>
-                                        @if (ViewBag.provinces != null)
-                                        {
-                                            @Html.DropDownList("provincia", provinces, "Seleccione una provincia")
-                                        }
+                                        @Html.DropDownListFor(model => model.provincia, new SelectList(" "), "Seleccione una provincia", new { @class = "form-control" })
+
                                     </div>
                                 </div>
 
@@ -195,23 +192,11 @@
             </div>
         </div>
         <div class="fixed-action-btn">
-            <a href="@Url.Action( "Index" , "Client/Index" )" class="btn-floating btn-large black left turq-hover">
+            <a href="@Url.Action( "Index" , "Client/Index" )" class="btn-floating btn-large blue draken-3 left turq-hover">
                 <i class="large material-icons">arrow_back</i>
             </a>
         </div>
-    }
-    else
-    {
-        <div class="row container center top-m-block">
-
-            <div class="card hoverable s10 section">
-
-                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para crear un cliente.</h3>
-                <i class="large material-icons red-text">block</i>
-
-            </div>
-        </div>
-    }
+   
 
 
 }
@@ -226,42 +211,5 @@
     @Scripts.Render("~/bundles/ajax")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $("#provincia").change(function () {
-
-                var output = "";
-                $.get("/localizations/cantonesList", { provincia: $("#provincia").val() }, function (data) {
-                    $('#canton').children().remove().end()
-                    $.each(data, function (index, row) {
-                        $("#canton").append("<option value='" + row.codigoPK + "'>" + row.nombre + "</option>")
-                    });
-                    $('select').formSelect();
-                    $.get("/localizations/districtsList", { provincia: $("#provincia").val(), canton: $("#canton").val() }, function (data) {
-                        $('#distrito').children().remove().end()
-                        $.each(data, function (index, row) {
-                            $("#distrito").append("<option value='" + row.codigoPK + "'>" + row.nombre + "</option>")
-                        });
-                        $('select').formSelect();
-                    });
-                });
-            })
-        });
-    </script>
-    <script>
-
-        $(document).ready(function () {
-            $("#canton").change(function () {
-
-                var output = "";
-                $.get("/localizations/districtsList", { provincia: $("#provincia").val(), canton: $("#canton").val() }, function (data) {
-                    $('#distrito').children().remove().end()
-                    $.each(data, function (index, row) {
-                        $("#distrito").append("<option value='" + row.codigoPK + "'>" + row.nombre + "</option>")
-                    });
-                    $('select').formSelect();
-                });
-            })
-        });
-    </script>
+    
 }

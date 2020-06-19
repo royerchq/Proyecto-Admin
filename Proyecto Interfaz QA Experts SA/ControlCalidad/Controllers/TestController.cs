@@ -18,18 +18,9 @@ namespace ControlCalidad.Controllers
         // GET: Test
         public async Task<ActionResult> Index(int? id, int? projectId)
         {
-            if (id != null && projectId != null) {
-
-                RequirementController r = new RequirementController();
-
-                ViewBag.requirementId = id;
-                ViewBag.projectId = projectId;
-                ViewBag.requirementName = r.getRequirementName(id);
-                var pruebas = db.Pruebas.Include(p => p.Requerimiento).OrderByDescending(p => p.idPK);
-                return View(await pruebas.ToListAsync());
-            }
-
-            return HttpNotFound();
+            
+                return View();
+           
             
         }
 
@@ -78,18 +69,8 @@ namespace ControlCalidad.Controllers
         // GET: Test/Edit/5
         public async Task<ActionResult> Edit(int? id, int? projectID, int? requirementID)
         {
-            if (id == null || projectID == null || requirementID == null)
-            {
-                return HttpNotFound();
-            }
-
-            Prueba prueba = await db.Pruebas.FindAsync(id, projectID, requirementID);
-            if (prueba == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.id_requerimientoFK = new SelectList(db.Requerimientoes, "idPK", "nombre", prueba.id_requerimientoFK);
-            return View(prueba);
+           
+            return View();
         }
 
         // POST: Test/Edit/5

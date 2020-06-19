@@ -56,7 +56,7 @@ namespace ControlCalidad.Controllers
         public async Task<ActionResult> Index()
         {
 
-            return View(await db.Clientes.ToListAsync());
+            return View();
         }
 
         // GET: Client/Details/5
@@ -77,7 +77,7 @@ namespace ControlCalidad.Controllers
         // GET: Client/Create
         public ActionResult Create()
         {
-            ViewBag.provinces = this.localizations.provinceList();
+            
             return View();
 
         }

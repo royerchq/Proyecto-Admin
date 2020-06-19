@@ -6,9 +6,12 @@
 
 
 @{
-    <h3 class="text-grey">Editar Prueba</h3>
+    int? requirementId = 1;
+    int? projectId = 1;
+
+    <h3 class="text-black-50">Editar prueba</h3>
     <div class="margin-b1">
-        <hr />
+
     </div>
 
     <div class="row container">
@@ -18,92 +21,147 @@
             <div class="card hoverable">
 
                 <nav>
-
-                    <div class="nav-wrapper black">
-
+                    <div class="nav-wrapper blue draken-2">
                         <p class="col s4">Quality Expert S.A</p>
-
                     </div>
-
                 </nav>
+
+                <div class="margin-b">
+
+                </div>
+
                 @using (Html.BeginForm("Edit", "Test", FormMethod.Post, new
                 {
-                    @onSubmit = "onSubmit()",
-                   
+                    @onsubmit = "onSubmit()"
 
                 }))
-
                 {
+                    <div class="margin-b section">
+
+                    </div>
+
                     @Html.AntiForgeryToken()
 
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="margin-b section">
+                    <div class="form-horizontal">
+
+                        @Html.ValidationSummary(true, "", new {
+                       @class = "text-danger"
+                   })
+
+
+                        <div class="row">
+
+                            <div class="col s8 offset-s3">
+
+
+                                <div class="row margin-b hide">
+
+                                    <div class="input-field col s11">
+
+                                        <i class="p-size text-grey material-icons prefix">info</i>
+                                        <label for="id_proyectoFK">Id del proyecto <span class="red-text">  *</span></label>
+                                        <input name="id_proyectoFK" type="text" value=@projectId />
+                                        <span class="text-error" id="nameError"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row margin-b hide">
+
+                                    <div class="input-field col s11">
+
+                                        <i class="p-size text-grey material-icons prefix">assignment_ind</i>
+                                        <label for="id_requerimientoFK">Id del requerimiento <span class="red-text">  *</span></label>
+                                        <input name="id_requerimientoFK" type="text" value=@requirementId />
+                                        <span class="text-error" id="nameError"></span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row margin-b">
+
+                                    <div class="input-field col s11">
+
+                                        <i class="p-size text-grey material-icons prefix">assignment_ind</i>
+                                        <label for="nombre"> Nombre de la prueba <span class="red-text">  *</span></label>
+                                        <input name="nombre" required class="validate form-control" type="text" />
+                                        <span class="text-error" id="nameError"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row margin-b">
+
+                                    <div class="input-field col s11">
+
+                                        <i class="p-size text-grey material-icons prefix">info</i>
+
+                                        <select name="resultadoFinal">
+                                            <option value="" selected>Seleccione un estado</option>
+                                            <option value="Incompleta">Incompleta</option>
+                                            <option value="Exitosa">Exitosa</option>
+                                            <option value="Fallida">Fallida</option>
+
+                                        </select>
+                                        <span class="text-error" id="nameError"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row margin-b">
+
+                                    <div class="input-field col s11">
+
+                                        <i class="p-size text-grey material-icons prefix">border_color</i>
+                                        <textarea id="details" class="materialize-textarea" name="detalleResultado"></textarea>
+                                        <label for="details">Detalles del resultado</label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
 
-                    <input type="text" value="@Model.idPK" name="idPK" class="hide" />
-
-                    <input type="text" value="@Model.id_proyectoFK" name="id_proyectoFK" class="hide" />
-
-                    <input type="text" value="@Model.id_requerimientoFK" name="id_requerimientoFK" class="hide" />
-
-                    <div class="row">
-
-                        <div class="col s8 offset-s3">
-
-                            <div class="row margin-b">
-
-                                <div class="input-field col s11">
-                                    <i class="p-size material-icons text-grey prefix">assignment_ind</i>
-
-                                    <label for="nombre">Nombre de la prueba</label>
-                                    <input name="nombre" value="@Model.nombre" type="text" required class="validate form-control" />
-
-                                </div>
-
-                            </div>
-
+                    <div class="hide row container center" id="loading">
+                        <div class="">
+                            <i class="material-icons text-turq ">info_outline</i>
+                        </div>
+                        <div class="">
+                            <p class="text-turq">
+                                Creando... Por favor espere.
+                            </p>
                         </div>
 
-                        <div class="col s8 offset-s3">
-
-                            <div class="row margin-b">
-
-                                <div class="input-field col s11">
-                                    <i class="p-size material-icons text-grey prefix">info</i>
-
-                                    <select name="resultadoFinal">
-                                        <option value="@Model.resultadoFinal" selected>@Model.resultadoFinal</option>
-                                        <option value="@Model.resultadoFinal">Seleccione un estado</option>
-                                        <option value="Incompleta">Incompleta</option>
-                                        <option value="Exitosa">Exitosa</option>
-                                        <option value="Fallida">Fallida</option>
-
-                                    </select>
-
-                                </div>
-
-                            </div>
-
+                        <div class="progress">
+                            <div class="indeterminate"></div>
                         </div>
-
-                        <div class="col s8 offset-s3">
-
-                            <div class="row margin-b">
-
-                                <div class="input-field col s11">
-                                    <i class="p-size material-icons text-grey prefix">border_color</i>
-
-                                    <label for="detalleResultado">Detalles del resultado</label>
-                                    <input name="detalleResultado" value="@Model.detalleResultado" type="text" />
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
                     </div>
 
+                    <div class=" row container center hide " id="complete">
+                        <div class="">
+                            <i class="material-icons text-turq ">info_outline</i>
+                        </div>
+                        <div class="">
+                            <p class="text-turq">
+                                Se creó correctamente.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="margin-required col s4 offset-s5">
+                        <p class="text-error">
+                            Los campos con * son requeridos.
+                        </p>
+                    </div>
 
                     <div class="margin-b1">
                     </div>
@@ -111,44 +169,29 @@
                     <br />
 
                     <div class="row center">
-                        <!-----
-      @Html.ActionLink("Cancelar", "Details", new
-      {
-         id = Model.idPK,
-         projectID = Model.id_proyectoFK,
-         requirementID = Model.id_requerimientoFK
-      }, new
-      {
-           @class = "margin-r waves-effect red-hover btn red accent-4"
-      }) -->
-                        <button type="reset" class="margin-r waves-effect red-hover btn red accent-4">Cancelar</button>
-                        <button type="submit" class="margin-l waves-effect waves-light btn turq">Guardar</button>
 
-                        <div class="fixed-action-btn">
-                            <a href="@Url.Action("Details", "Test", new { id = @Model.idPK, projectID = @Model.id_proyectoFK, requirementID = @Model.id_requerimientoFK })" class="btn-floating btn-large black tooltipped" data-position="left" data-tooltip="Volver">
-                                <i class="large material-icons">arrow_back</i>
-                            </a>
-                        </div>
+                        <button type="reset" class="margin-r waves-effect red-hover btn red accent-4">Cancelar</button>
+                        <button type="submit" class="margin-l waves-effect waves-light btn turq">Crear</button>
 
                     </div>
+                    <div class="fixed-action-btn">
+                        <a href="@Url.Action("Index", "Test", new {
+                                id = requirementId,
+                                projectId = projectId
+                            })" class="btn-floating btn-large blue draken-3 tooltipped" data-position="left" data-tooltip="Volver">
+                            <i class="large material-icons">arrow_back</i>
+                        </a>
+                    </div>
                     <br />
-
-
-
                 }
+
             </div>
 
         </div>
 
     </div>
+    }
 
-
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

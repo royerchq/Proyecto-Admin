@@ -1,4 +1,4 @@
-﻿    @model IEnumerable<ControlCalidad.Models.Cliente>
+﻿@model IEnumerable<ControlCalidad.Models.Cliente>
 @*
     @{
         ViewBag.Title = "Index";
@@ -7,75 +7,116 @@
 *@
 
 @{
-
-    if (User.IsInRole("Jefe"))
-    {
-        <h3 class="text-grey">Clientes</h3>
-        <hr />
-
-        <div class="fixed-action-btn">
-            <a href="@Url.Action("Crear", "Client/Create")" class="btn-floating btn-large black turq-hover"><i class="large material-icons">add</i></a>
-        </div>
-        <div class="card ">
-            <table class="table striped ">
-                <thead>
-                    <tr>
-                        <th class="center black white-text">
-                            Nombre
-                        </th>
-                        <th class="center black white-text">
-                            Teléfono
-                        </th>
-                        <th class="center black white-text">
-                            Correo
-                        </th>
-                        <th class="center black white-text">
-                            Dirección
-                        </th>
-                        <th class="center black white-text">
-                            <p>Acción</p>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td class="center">
-                                @Html.DisplayFor(modelItem => item.nombreP)
-                                @Html.DisplayFor(modelItem => item.apellido1)
-                            </td>
-                            <td class="center">
-                                @Html.DisplayFor(modelItem => item.telefono)
-                            </td>
-                            <td class="center">
-                                @Html.DisplayFor(modelItem => item.correo)
-                            </td>
-                            <td class="center">
-                                @Html.DisplayFor(modelItem => item.provincia),
-                                @Html.DisplayFor(modelItem => item.canton),
-                                @Html.DisplayFor(modelItem => item.distrito)
-                            </td>
-                            <td class="center">
-                                @Html.ActionLink("Detalles", "Details", new { id = item.cedulaPK }, new {
-                               @class = "waves-effect waves-light btn  black turq-hover"
-                           })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-     }
-    else
-    {
-        <div class="row container center top-m-block">
-            <div class="card hoverable s10 section">
-                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para ingresar a la sección de clientes.</h3>
-                <i class="large material-icons red-text">block</i>
-            </div>
-         </div>
-    }
+    <h3 class="text-black-50">Clientes</h3>
 
 
- }
+    <div class="fixed-action-btn">
+        <a id="add-btn" href="@Url.Action("Crear", "Client/Create")" class="btn-floating btn-large blue draken-3 turq-hover">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+
+
+    <div class="card">
+
+        <table class="highlight">
+            <tr>
+                <th class="center blue draken-3 white-text">
+                    @Html.DisplayName("Nombre")
+                </th>
+                
+                <th class="center blue draken-3 white-text">
+                    @Html.DisplayName("Telefono")
+                </th>
+                <th class="center blue draken-3 white-text">
+                    @Html.DisplayName("Correo")
+                </th>
+                <th class="center blue draken-3 white-text">
+                    @Html.DisplayName("Direccion exacta")
+                </th>
+                
+                <th class="center blue draken-3 white-text">
+                    @Html.DisplayName("Accion")
+                </th>
+                <thth class="center black white-text"></thth>
+            </tr>
+
+
+            <tr>
+                <td class="center">
+                    Roger
+                </td>
+                
+
+                <td class="center">
+                    8746934
+                </td>
+                <td class="center">
+                    royerchq2014@gmail.com
+                </td>
+                <td class="center">
+                    Atenas, Alajuela
+                </td>
+               
+                <td class="center">
+                    @*Html.ActionLink("Edit", "Edit", new { id = item.cedulaPK }) |*@
+                    @Html.ActionLink("Detalles", "Details", new { }, new { @class = "waves-effect waves-light btn-small blue draken-3 turq-hover" })
+                    @*Html.ActionLink("Delete", "Delete", new { id = item.cedulaPK }) |*@
+                   
+                </td>
+            </tr>
+
+            <tr>
+                <td class="center">
+                    Sergio
+                </td>
+               
+
+                <td class="center">
+                    87457656
+                </td>
+                <td class="center">
+                    sergiotega@gmail.com
+                </td>
+                <td class="center">
+                    San Pedro, San Jose
+                </td>
+               
+                <td class="center">
+                    @*Html.ActionLink("Edit", "Edit", new { id = item.cedulaPK }) |*@
+                    @Html.ActionLink("Detalles", "Details", new { }, new { @class = "waves-effect waves-light btn-small blue draken-3 turq-hover" })
+                    @*Html.ActionLink("Delete", "Delete", new { id = item.cedulaPK }) |*@
+                  
+                </td>
+            </tr>
+
+            <tr>
+                <td class="center">
+                    Andres
+                </td>
+               
+
+                <td class="center">
+                    89075667
+                </td>
+                <td class="center">
+                    adavidovich@gmail.com
+                </td>
+                <td class="center">
+                    Curridabat, San Jose
+                </td>
+               
+                <td class="center">
+                    @*Html.ActionLink("Edit", "Edit", new { id = item.cedulaPK }) |*@
+                    @Html.ActionLink("Detalles", "Details", new { }, new { @class = "waves-effect waves-light btn-small blue draken-3 turq-hover" })
+               
+                </td>
+            </tr>
+
+
+        </table>
+
+    </div>
+
+
+}

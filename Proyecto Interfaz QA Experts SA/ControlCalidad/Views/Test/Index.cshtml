@@ -6,22 +6,22 @@
 
 @{
 
-    int? projectId = ViewBag.projectId;
-    int? requirementId = ViewBag.requirementId;
+    int? projectId = 1;
+    int? requirementId = 1;
 
 
-    <h3 class="text-grey">Pruebas del requerimiento @ViewBag.requirementName </h3>
+    <h3>Pruebas del requerimiento </h3>
     <div class="margin-b1">
         <hr />
     </div>
 
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large black tooltipped" data-position="left" data-tooltip="Opciones">
+        <a class="btn-floating btn-large blue draken-3 tooltipped" data-position="left" data-tooltip="Opciones">
             <i class="large material-icons">more_vert</i>
         </a>
         <ul>
             <li>
-                <a href="@Url.Action("Index", "Requirement", new { projectId = ViewBag.projectId })" class="btn-floating btn-large black turq-hover tooltipped" data-position="left" data-tooltip="Volver">
+                <a href="@Url.Action("Index", "Requirement", new { projectId = 1 })" class="btn-floating btn-large blue draken-3 turq-hover tooltipped" data-position="left" data-tooltip="Volver">
                     <i class="large material-icons">arrow_back</i>
                 </a>
             </li>
@@ -30,7 +30,7 @@
                     {
                         requirementId = requirementId,
                         projectId = projectId,
-                    })" class="btn-floating btn-large black turq-hover tooltipped" data-position="left" data-tooltip="Agregar una prueba">
+                    })" class="btn-floating btn-large blue draken-3 turq-hover tooltipped" data-position="left" data-tooltip="Agregar una prueba">
                     <i class="large material-icons">add</i>
                 </a>
             </li>
@@ -42,46 +42,34 @@
 
         <table class="table striped">
             <tr>
-                <th class="center black white-text">
+                <th class="center blue draken-3 white-text">
                     @Html.DisplayName("Nombre de la prueba")
                 </th>
-                <th class="center black white-text">
+                <th class="center blue draken-3 white-text">
                     @Html.DisplayName("Estado")
                 </th>
-                <th class="center black white-text">
+                <th class="center blue draken-3 white-text">
                     @Html.DisplayName("Acción")
                 </th>
             </tr>
 
-            @foreach (var item in Model)
-            {
-                if (item.id_proyectoFK == projectId && item.id_requerimientoFK == requirementId) //Para mostrar las pruebas asociadas a un proy y req especifico
-                {
                     <tr>
                         <td class="center">
-                            @Html.DisplayFor(modelItem => item.nombre)
+                            Test de Funcionalidad
                         </td>
                         <td class="center">
-                            @Html.DisplayFor(modelItem => item.resultadoFinal)
+                            Exito
                         </td>
                         <td class="center">
 
-                            @Html.ActionLink("Detalles", "Details", new
+                            @Html.ActionLink("Detalles", "Details", new {}, new
                        {
-                           id = item.idPK,
-                           projectID = item.id_proyectoFK,
-                           requirementID = item.id_requerimientoFK,
-                           reqName = item.Requerimiento.nombre
-                       }, new
-                       {
-                           @class = "waves-effect waves-light btn black turq-hover"
+                           @class = "waves-effect waves-light btn blue draken-3 turq-hover"
                        })
 
                         </td>
                     </tr>
-                }
-
-            }
+             
 
         </table>
 
@@ -89,13 +77,5 @@
 
 }
 
-@{
-    if (User.IsInRole("Cliente"))
-    {
-        <script>
-            document.getElementById("testAdd").classList.add("hide");
-        </script>
-    }
-}
 
 
