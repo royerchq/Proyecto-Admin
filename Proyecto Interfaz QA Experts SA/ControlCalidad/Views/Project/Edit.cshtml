@@ -15,216 +15,185 @@
 
 
 <div id="btn-add" class="fixed-action-btn">
-    <a href="@Url.Action("Details", "Project", new { id = Model.idPK })" class="btn-floating btn-large black turq-hover left tooltipped" data-position="left" data-tooltip="Volver">
+    <a href="@Url.Action("Details", "Project", new { id = 1
+        })" class="btn-floating btn-large blue draken-3 turq-hover left tooltipped" data-position="left" data-tooltip="Volver">
         <i class="large material-icons">arrow_back</i>
     </a>
 </div>
 
-@{
-    List<SelectListItem> clientsId = ( List<SelectListItem> ) ViewBag.allClientsId;
-    List<SelectListItem> leaders = ( List<SelectListItem> ) ViewBag.leaders;
+<div class="row container">
+    <div class="">
+        <div class="card hoverable">
+            <nav>
+                <div class="nav-wrapper blue draken-3">
+                    <p class="col s4">Quality Expert S.A</p>
+                </div>
+            </nav>
+            <div class="margin-b">
 
-
-    if( User.IsInRole( "Jefe" ) )
-    {
-
-        <div class="row container">
-            <div class="">
-                <div class="card hoverable">
-                    <nav>
-                        <div class="nav-wrapper black">
-                            <p class="col s4"> Quality Expert S.A</p>
-                        </div>
-                    </nav>
-                    @using( Html.BeginForm( "Edit" , "Project" , FormMethod.Post , new {
-                        @onsubmit = "onSubmit()"
-                    } ) )
-                    {
-                        @Html.AntiForgeryToken( )
-
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="margin-b section">
-                        </div>
-
-                        <div class="row">
-                            <div class="col s4">
-                                <div class="row margin-b">
-                                    <div class="input-field col s11">
-                                        <i class="p-size material-icons text-grey prefix">assignment_ind</i>
-                                        @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                                        @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control",
-                                       @onkeyup = "validateProjectName()", @id = "projectName"
-                                   } })
-                                    </div>
-                                </div>
-                                <div class="row margin-b">
-                                    <div class="input-field col s11">
-                                        <span class="text-error" id="ClientError"></span>
-
-                                        <i class="p-size material-icons text-grey prefix">person</i>
-                                        @Html.DropDownList( "cedulaClienteFK" , clientsId , "Selecciona el cliente" , new {
-                                       htmlAttributes = new {
-                                           @readonly = "readonly",
-                                           @class = "form-control" ,
-                                           @id = "client",
-                                           @required = "required",
-                                       }
-                                   } )
-                                        <label for="cedulaClienteFK">Cliente del proyecto</label>
-
-                                    </div>
-                                </div>
-
-                                <div class="row margin-b">
-                                    <div class="input-field col s11">
-                                        <i class="p-size material-icons text-grey prefix">person</i>
-                                        @Html.DropDownList("newProjectLeader", leaders, "Selecciona el líder", new { @class = "validate" })
-                                        <label for="cedulaClienteFK">Lider del proyecto</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col s4">
-                                <div class="row margin-b">
-                                    <div class="input-field col s11">
-                                        <i class="p-size material-icons text-grey prefix">assignment</i>
-                                        @Html.LabelFor(model => model.objetivo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        @Html.EditorFor(model => model.objetivo, new { htmlAttributes = new { @class = "form-control" } })
-                                    </div>
-                                </div>
-
-                                <div class="row margin-b">
-                                    <div class="input-field col s11">
-                                        <i class="p-size material-icons text-grey prefix">date_range</i>
-                                        <label for="fechaInicio">Fecha de Inicio</label>
-                                        <input type="text" value="@Model.fechaInicio.ToShortDateString()" class="datepickerDate datepicker" id="fechaInicio" name="fechaInicio" required onchange="validateDate()" />
-                                        <span class="text-error" id="dateErrorMessage"></span>
-
-                                    </div>
-                                </div>
-
-                                <div class="row margin-b">
-                                    <div class="input-field col s11">
-                                        <i class="p-size material-icons text-grey prefix">date_range</i>
-                                        <label for="fechaFin">Fecha de Finalización</label>
-                                        <input value="@Model.fechaFin" type="text" class="datepickerDate datepicker" id="fechaFin" name="fechaFin" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col s4">
-                                <div class="row margin-b hide">
-                                    <div class="input-field col s6 offset-s3">
-                                        <i class="p-size material-icons text-grey prefix">person</i>
-                                        @Html.LabelFor(model => model.idPK, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                                        @Html.EditorFor(model => model.idPK, new { htmlAttributes = new { @class = "form-control" } })
-
-                                        @Html.ValidationMessageFor(model => model.idPK, "", new { @class = "text-danger" })
-
-                                    </div>
-                                </div>
-
-                                <div class="row margin-b">
-                                    <div class="input-field col col s11">
-                                        <i class="p-size material-icons text-grey prefix">info</i>
-                                        <select name="estado">
-                                            <option value="@Model.estado" selected>@Model.estado</option>
-                                            <option value="Activo">Activo</option>
-                                            <option value="Inactivo">Inactivo</option>
-                                            <option value="Finalizado">Finalizado</option>
-                                            <option value="Cancelado">Cancelado</option>
-                                        </select>
-
-                                    </div>
-                                </div>
-
-                                <div class="row margin-b">
-                                    <div class="input-field col s11">
-                                        <i class="p-size material-icons text-grey prefix">hourglass_empty</i>
-                                        @Html.LabelFor(model => model.duracionEstimada, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <input name="duracionEstimada" type="number" value="@Model.duracionEstimada" required class="validate form-control" onkeyup="validateDuration()" onblur="validateDuration()" id="avrDuration" />
-                                        <span class="text-error" id="avrDurationError"></span>
-
-                                    </div>
-                                </div>
-
-                                <div class="row margin-b">
-                                    <div class="input-field col s11">
-                                        <i class="p-size material-icons text-grey prefix">hourglass_full</i>
-                                        @Html.LabelFor(model => model.duracionReal, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        @Html.EditorFor(model => model.duracionReal, new { htmlAttributes = new { @class = "form-control" , type="number" ,
-                                       @onblur = "validateRealDuration()", @onkeyup = "validateRealDuration()" , @id = "RealDur"
-                                   } })
-                                        <span class="text-error" id="realDurError"></span>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class=" row container center" id="loading" style="display:none;">
-                            <div class="">
-                                <i class="material-icons text-turq ">info_outline</i>
-                            </div>
-                            <div class="">
-                                <p class="text-turq">
-                                    Editando... Por favor espere.
-                                </p>
-                            </div>
-
-                            <div class="progress">
-                                <div class="indeterminate"></div>
-                            </div>
-                        </div>
-
-                        <div class=" row container center hide " id="complete">
-                            <div class="">
-                                <i class="material-icons text-turq ">info_outline</i>
-                            </div>
-                            <div class="">
-                                <p class="text-turq">
-                                    Se edito correctamente.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="margin-b1">
-                        </div>
-
-                        <div class="row center">
-
-                            <button id="btn-delete" type="reset" class="margin-r waves-effect red-hover btn red accent-4">Cancelar</button>
-
-                            <button id="btn-submit" type="submit" class="margin-l waves-effect waves-light btn turq">Guardar</button>
-                        </div>
-
-                        <div class="margin-b section">
-                        </div>
-                    }
+            </div>
+            @using (Html.BeginForm("Create", "Project", FormMethod.Post, new
+            {
+                @onsubmit = "onSubmit()"
+            }))
+            {
+                <div class="margin-b section">
 
                 </div>
 
-            </div>
+                @Html.AntiForgeryToken()
 
+                <div class="row">
+                    <div class="col s4">
+                        <div class="row margin-b">
+                            <div class="input-field col s11">
+                                <i class="p-size text-grey material-icons prefix">assignment_ind</i>
+                                <label for="nombre">Nombre del proyecto <span class="red-text">  *</span></label>
+                                <input name="nombre" type="text" required class="validate form-control" onblur="validateProjectName()" onkeyup="validateProjectName()" id="projectName" />
+                                <span class="text-error" id="nameError"></span>
+                            </div>
+                        </div>
+
+                        <div class="row margin-b">
+                            <div class="input-field col s11">
+                                <i class="p-size material-icons text-grey prefix">person</i>
+                                <select name="cliente" required id="status">
+                                    <option value="Inactivo">Roger Chacon</option>
+                                    <option value="Activo">Juan Pedro</option>
+                                    <option value="Finalizado">Miguel Jesus</option>
+                                    <option value="Cancelado">Sergio Ortega</option>
+                                </select>
+                                <label for="clientId">Cliente del proyecto <span class="red-text">  *</span></label>
+                                <span class="text-error" id="ClientError"></span>
+                            </div>
+                        </div>
+
+                        <div class="row margin-b">
+                            <div class="input-field col s11">
+                                <i class="p-size material-icons text-grey prefix">date_range</i>
+                                <label for="fechaFin">Fecha de Finalización</label>
+                                <input type="text" disabled class="datepickerDate datepicker" id="fechaFin" name="fechaFin" />
+                                @Html.ValidationMessageFor(model => model.fechaFin, "", new { @class = "text-error" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s4">
+                        <div class="row margin-b">
+                            <div class="input-field col s11">
+                                <i class="p-size material-icons text-grey prefix">assignment</i>
+                                @Html.LabelFor(model => model.objetivo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.EditorFor(model => model.objetivo, new { htmlAttributes = new { @class = "validate" } })
+                                @Html.ValidationMessageFor(model => model.objetivo, "", new { @class = "text-error" })
+                            </div>
+                        </div>
+
+                        <div class="row margin-b">
+                            <div class="input-field col s11">
+                                <i class="p-size material-icons text-grey prefix">person</i>
+                                <select name="lider" required id="status">
+                                    <option value="Inactivo">Sergio Ortega</option>
+                                    <option value="Activo">Juan Pedro</option>
+                                    <option value="Finalizado">Miguel Jesus</option>
+                                    <option value="Cancelado">Sergio Ortega</option>
+                                </select>
+                                <label for="leader">Lider del proyecto</label>
+                            </div>
+                        </div>
+
+                        <div class="row margin-b">
+                            <div class="input-field col s11">
+                                <i class="p-size material-icons text-grey prefix">hourglass_empty</i>
+                                <label for="duracionEstimada">Duración Estimada <span class="red-text">  *</span> </label>
+                                <input name="duracionEstimada" type="number" required class="validate form-control" onblur="validateDuration()" onkeyup="validateDuration()" id="avrDuration" />
+                                <span class="text-error" id="avrDurationError"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s4">
+
+                        <div class="row margin-b">
+                            <div class="input-field col s11" data-target="dropdownCreate">
+                                <i class="p-size material-icons text-grey prefix">info</i>
+                                <select name="estado" required id="status">
+                                    <option value="Inactivo">Inactivo</option>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Finalizado">Finalizado</option>
+                                    <option value="Cancelado">Cancelado</option>
+                                </select>
+                                <label for="status">Estado del proyecto <span class="red-text">  *</span></label>
+                            </div>
+                        </div>
+
+                        <div class="row margin-b">
+                            <div class="input-field col s11">
+                                <i class="p-size material-icons text-grey prefix">date_range</i>
+                                <label for="fechaInicio">Fecha de Inicio <span class="red-text">  *</span></label>
+                                <input type="text" class="datepickerDate datepicker validate form-control " id="fechaInicio" name="fechaInicio" required onchange="validateDateP()" onblur="validateDateP()" />
+                                <span class="text-error" id="dateErrorMessage"></span>
+                            </div>
+                        </div>
+
+                        <div class="row margin-b">
+                            <div class="input-field col s11">
+                                <i class="p-size material-icons text-grey prefix">hourglass_full</i>
+                                <input name="duracionReal" type="number" disabled class="validate form-control" id="realDuration" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="hide row container center" id="loading">
+                    <div class="">
+                        <i class="material-icons text-turq ">info_outline</i>
+                    </div>
+                    <div class="">
+                        <p class="text-turq">
+                            Creando... Por favor espere.
+                        </p>
+                    </div>
+
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+
+                <div class=" row container center hide " id="complete">
+                    <div class="">
+                        <i class="material-icons text-turq ">info_outline</i>
+                    </div>
+                    <div class="">
+                        <p class="text-turq">
+                            Se creó correctamente.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="margin-required">
+                    <p class="text-error">
+                        Los campos con * son requeridos.
+                    </p>
+                </div>
+
+                <div class="margin-b1">
+                </div>
+
+                <div class="row center">
+                    <button id="btn-delete" type="reset" class="margin-r waves-effect red-hover btn red accent-4">Cancelar</button>
+
+                    <button id="btn-submit" type="submit" class="margin-l btn waves-effect waves-light turq btn-login modal-trigger">Crear</button>
+
+                </div>
+                <div class="margin-b section">
+                </div>
+            }
         </div>
+    </div>
 
-    }
-    else
-    {
-        <div class="row container center top-m-block">
-
-            <div class="card hoverable s10 section">
-
-                <h3>Lo sentimos.<br />Debes iniciar sesión como <span class="red-text"> jefe </span> para editar un empleado.</h3>
-                <i class="large material-icons red-text">block</i>
-
-            </div>
-        </div>
-    }
-
-}
+</div>
 
 @section Scripts {
     @Scripts.Render( "~/bundles/jqueryval" )

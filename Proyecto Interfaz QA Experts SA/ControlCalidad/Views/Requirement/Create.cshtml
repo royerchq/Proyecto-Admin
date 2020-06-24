@@ -2,12 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
-    List<SelectListItem> testerId = ( List<SelectListItem> ) ViewBag.testers;
-
-    if( User.IsInRole( "Jefe" ) || User.IsInRole( "Lider" ) )
-    {
-
-
+   
 
         <h3 class="text-grey">Crear nuevo Requerimiento</h3>
         <div class="margin-b1">
@@ -94,10 +89,14 @@
                                 <div class="row margin-b">
                                     <div class="input-field col s11">
                                         <i class="p-size material-icons text-grey prefix">person</i>
-                                        @Html.DropDownList( "testers" , testerId , "Seleccione un tester" , new {
-                                       @onchange = "setIdTester()" ,
-                                       @id = "dropdown"
-                                   } )
+                                        <select name="complejidad" required id="complejidad">
+                                            <option value="" disabled selected>Seleccione un Tester</option>
+                                            <option value="Facil">Facil</option>
+                                            <option value="Mediano">Mediano</option>
+                                            <option value="Complejo">Complejo</option>
+                                            <option value="Muy complejo">Muy complejo</option>
+
+                                        </select>
                                         <label for="testerId"> Tester asignado</label>
                                         <span class="text-error" id="testerError"></span>
                                     </div>
@@ -271,22 +270,12 @@
 
         <div id="btn-add" class="fixed-action-btn">
             <a href="@Url.Action( "Index" , "Requirement/Index" , new {
-                projectId = ViewBag.projectId
+                projectId = 1
             } )" class="btn-floating btn-large black turq-hover left tooltipped" data-position="left" data-tooltip="Volver">
                 <i class="large material-icons">arrow_back</i>
             </a>
         </div>
-    }
-    else
-    {
-
-        <div class="row container center top-m-block">
-            <div class="card hoverable s10 section">
-                <h3>Lo sentimos.<br />No tienes acceso a esta sección</h3>
-                <i class="large material-icons red-text">block</i>
-            </div>
-        </div>
-    }
+   
 }
 
 <script>

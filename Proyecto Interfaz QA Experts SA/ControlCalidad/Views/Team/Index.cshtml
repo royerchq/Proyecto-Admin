@@ -5,13 +5,12 @@
 }
 
 @{
-    if (User.IsInRole("Lider"))
-    {
+   
 
         <h2>Tu equipo</h2>
 
         <p>
-            @Html.ActionLink("Create Team", "Create", new { email = User.Identity.Name })
+            @Html.ActionLink("Create Team", "Create", new { email = "royerchq@gmail.com" })
         </p>
         <table class="table">
             <tr>
@@ -27,30 +26,29 @@
                 <th></th>
             </tr>
 
-            @foreach (var item in Model)
-            {
+           
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.rol)
+                        Jefe
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Empleado.nombreP)
+                       Roger Chacon
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Proyecto.nombre)
+                        Proyecto Admin
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id_proyecto = item.id_proyectoFK }) |
+                        @Html.ActionLink("Edit", "Edit", new { id_proyecto = 1 }) |
                         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                     </td>
                 </tr>
                 <div class="fixed-action-btn">
-                    <a href="@Url.Action("Edit", "Team/Edit", new { id_proyecto = item.id_proyectoFK })" class="btn-floating btn-large turq">
+                    <a href="@Url.Action("Edit", "Team/Edit", new { id_proyecto = 1 })" class="btn-floating btn-large turq">
                         <i class="large material-icons">edit</i>
                     </a>
                 </div>
-            }
+            
         </table>
-    }
+    
 }

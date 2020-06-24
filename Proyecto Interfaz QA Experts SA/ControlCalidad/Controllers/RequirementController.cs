@@ -28,14 +28,9 @@ namespace ControlCalidad.Controllers
         //<return>  : Redirect to Index View
         public ActionResult Index( int? projectId, string idTester)
         {
-            if (idTester != null && idTester != "")
-            {
-                tieneAsignado.insert(idTester, projectId);
-            }
-            var requerimientoes = db.Requerimientoes.Include( r => r.Proyecto ).Where( r => r.id_proyectoFK == projectId ).OrderByDescending(r => r.idPK);
-            ViewBag.projectId = projectId ;
-            ViewBag.projectName = projectController.getProjectName( projectId );
-            return View( requerimientoes.ToList( ) );
+           
+            
+            return View( );
         }
 
         //<summary> : Shows requirement's details
@@ -103,36 +98,8 @@ namespace ControlCalidad.Controllers
         //<return>  : Redirect to Details View
         public async Task<ActionResult> Edit( int? id , int? projectId )
         {
-            if( id == null || projectId == null )
-            {
-                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
-            }
-            Requerimiento requerimiento = await db.Requerimientoes.FindAsync( id , projectId );
-            if( requerimiento == null )
-            {
-                return HttpNotFound();
-            }
-            SelectListItem actualTester = getTester(projectId, id);
-            List<SelectListItem> allTesters = getTesters(projectId);
-            ViewBag.defaultText = "Seleccione un tester";
-            if(actualTester != null)
-            {
-                foreach (SelectListItem tester in allTesters)
-                {
-                    if (tester.Value == actualTester.Value)
-                    {
-                        ViewBag.defaultText = tester.Text;
-                        break;
-                    }
-                }
-            }
-            
-            ViewBag.testers = allTesters;
-            ViewBag.fechaAsignacion = dateTimeToString( requerimiento.fechaAsignacion , "MM/dd/yyyy" );
-            ViewBag.fechaFin = dateTimeToString( requerimiento.fechaFinalizacion , "MM/dd/yyyy" );
-            ViewBag.fechaInicio = dateTimeToString( requerimiento.fechaInicio , "MM/dd/yyyy" );
-            ViewBag.id_proyectoFK = new SelectList( db.Proyectoes , "idPK" , "nombre" , requerimiento.id_proyectoFK );
-            return View( requerimiento );
+          
+            return View(  );
         }
 
         //<summary> : POST --> Modify the requirement to the db

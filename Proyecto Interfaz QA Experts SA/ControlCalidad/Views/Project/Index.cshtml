@@ -12,11 +12,11 @@
 </div>
 @{
 
-    int? projectId = ViewBag.projectId;
-    string clientId = ViewBag.clientId;
+    int? projectId = 1;
+    string clientId = "1";
 
     <div id="btn-add" class="fixed-action-btn">
-        <a href="@Url.Action("Create New", "Project/Create")" class="btn-floating btn-large black turq-hover tooltipped" data-position="left" data-tooltip="Agregar nuevo proyecto">
+        <a href="@Url.Action("Create New", "Project/Create")" class="btn-floating btn-large blue draken-3 turq-hover tooltipped" data-position="left" data-tooltip="Agregar nuevo proyecto">
             <i class="large material-icons">add</i>
         </a>
     </div>
@@ -24,164 +24,63 @@
     <div class="card">
         <table class="table striped">
             <tr>
-                <th class="center black white-text">
+                <th class="center blue draken-3 white-text">
                     @Html.DisplayNameFor(model => model.nombre)
                 </th>
 
-                <th class="center black white-text">
+                <th class="center blue draken-3 white-text">
                     @Html.DisplayNameFor(model => model.estado)
                 </th>
 
-                <th class="center black white-text">
+                <th class="center blue draken-3 white-text">
                     @Html.DisplayName("Nombre Cliente")
                 </th>
-                <th class="center black white-text">
+                <th class="center blue draken-3 white-text">
                     @Html.DisplayName("Acción")
                 </th>
-                <th class="center black white-text">
+                <th class="center blue draken-3 white-text">
                     @Html.DisplayName("Requerimientos")
                 </th>
-                <th class="center black white-text">
-                    @Html.DisplayName("Equipo")
-                </th>
+             
             </tr>
 
-            @foreach (var item in Model)
-            {
 
-                if ((User.IsInRole("Tester") || User.IsInRole("Lider")) && projectId != null)
-                {
-                    if (item.idPK == projectId)
-                    {
-                        string clientName = item.Cliente.nombreP + " " + item.Cliente.apellido1;
+               
                         <tr>
                             <td class="center">
-                                @Html.DisplayFor(modelItem => item.nombre)
+                                Proyecto 1
                             </td>
 
                             <td class="center">
-                                @Html.DisplayFor(modelItem => item.estado)
+                                En Progreso
                             </td>
 
                             <td class="center">
-                                @Html.DisplayName(clientName)
+                                Roger Chacon
                             </td>
                             <td class="center">
 
-                                @Html.ActionLink("Detalles", "Details", new { id = item.idPK },
-                          new { @class = "waves-effect waves-light btn black turq-hover" }
+                                @Html.ActionLink("Detalles", "Details", new { id = projectId },
+                          new { @class = "waves-effect waves-light btn blue draken-3 turq-hover" }
                           )
                             </td>
 
                             <td class="center">
-                                @Html.ActionLink("Ver Requerimientos", "../Requirement/Index", new { projectId = item.idPK },
-                              new { @class = "waves-effect waves-light btn black turq-hover" }
+                                @Html.ActionLink("Ver Requerimientos", "../Requirement/Index", new { projectId = projectId },
+                              new { @class = "waves-effect waves-light btn blue draken-3 turq-hover" }
                               )
                             </td>
-                            <td class="center">
-                                @Html.ActionLink("Ver Equipo", "../Team/Edit", new { id_proyecto = item.idPK },
-                          new { @class = "waves-effect waves-light btn black turq-hover" }
-                          )
-                            </td>
+                        
                         </tr>
 
-                    }
-                }
-                else
-                {
-                    if (User.IsInRole("Cliente"))
-                    {
-
-                        if (item.Cliente.cedulaPK == clientId)
-                        {
-                            string clientName = item.Cliente.nombreP + " " + item.Cliente.apellido1;
-                            <tr>
-                                <td class="center">
-                                    @Html.DisplayFor(modelItem => item.nombre)
-                                </td>
-
-                                <td class="center">
-                                    @Html.DisplayFor(modelItem => item.estado)
-                                </td>
-
-                                <td class="center">
-                                    @Html.DisplayName(clientName)
-                                </td>
-                                <td class="center">
-
-                                    @Html.ActionLink("Detalles", "Details", new { id = item.idPK },
-                              new { @class = "waves-effect waves-light btn black turq-hover" }
-                              )
-                                </td>
-
-                                <td class="center">
-                                    @Html.ActionLink("Ver Requerimientos", "../Requirement/Index", new { projectId = item.idPK },
-                               new { @class = "waves-effect waves-light btn black turq-hover" }
-                               )
-                                </td>
-
-                                <td class="center">
-                                    @Html.ActionLink("Ver Equipo", "../Team/Edit", new { id_proyecto = item.idPK },
-                               new { @class = "waves-effect waves-light btn black turq-hover" }
-                               )
-                                </td>
-                            </tr>
-                        }
-
-                    }
-                    else
-                    {
-
-                        string clientName = item.Cliente.nombreP + " " + item.Cliente.apellido1;
-                        <tr>
-                            <td class="center">
-                                @Html.DisplayFor(modelItem => item.nombre)
-                            </td>
-
-                            <td class="center">
-                                @Html.DisplayFor(modelItem => item.estado)
-                            </td>
-
-                            <td class="center">
-                                @Html.DisplayName(clientName)
-                            </td>
-                            <td class="center">
-
-                                @Html.ActionLink("Detalles", "Details", new { id = item.idPK },
-                             new { @class = "waves-effect waves-light btn black turq-hover" }
-                             )
-                            </td>
-
-                            <td class="center">
-                                @Html.ActionLink("Ver Requerimientos", "../Requirement/Index", new { projectId = item.idPK },
-                              new { @class = "waves-effect waves-light btn black turq-hover" }
-                              )
-                            </td>
-
-                            <td class="center">
-                                @Html.ActionLink("Ver Equipo", "../Team/Edit", new { id_proyecto = item.idPK },
-                              new { @class = "waves-effect waves-light btn black turq-hover" }
-                              )
-                            </td>
-                        </tr>
-                    }
+                
 
 
-
-                }
-            }
+                
+            
 
         </table>
 
     </div>
 }
 
-@{
-
-    if( User.IsInRole( "Lider" ) || User.IsInRole( "Tester" ) || User.IsInRole( "Cliente" ) )
-    {
-        <script>
-            document.getElementById("btn-add").classList.add("hide");
-        </script>
-    }
-}

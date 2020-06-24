@@ -24,14 +24,7 @@ namespace ControlCalidad.Controllers
         // GET: Reports
         public ActionResult Index()
         {
-            ViewBag.allprojects = projectController.GetProjects();
-            ViewBag.allNameProjects = projectController.GetNameProjects();
-            ViewBag.alltesters = employeeController.GetTesters();
-            ViewBag.allNametesters = employeeController.GetNameTesters();
-            ViewBag.allLeaders = LeadersList();
-            ViewBag.finishedProjects = projectController.GetFinishedProjects( );
-            ViewBag.allTesters = testerController.getAllTesters( );
-            ViewBag.habilitiesCategories = habilitiesController.getHabilitiesCategories();
+     
             return View();
         }
 

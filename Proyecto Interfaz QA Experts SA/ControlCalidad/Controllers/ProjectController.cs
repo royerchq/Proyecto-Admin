@@ -99,20 +99,9 @@ namespace ControlCalidad.Controllers
         // GET: Project
         public async Task<ActionResult> Index()
         {
-            var clientController = new ClientController();
-            var proyectoes = db.Proyectoes.Include( p => p.Cliente ).OrderByDescending(p => p.idPK);
-            string email = User.Identity.Name;
-            if (User.IsInRole("Tester") || User.IsInRole("Lider"))
-            {
-                ViewBag.projectId = GetProjectIdByEmail(email);
-            }
-            else {
-                if ( User.IsInRole("Cliente") ) {
-                    ViewBag.clientId = clientController.GetClientIdByEmail(email);
-                } 
-            }
+            
 
-            return View( await proyectoes.ToListAsync( ) );
+            return View( );
 
         }
 
@@ -135,8 +124,7 @@ namespace ControlCalidad.Controllers
         // GET: Project/Create
         public ActionResult Create()
         {
-            ViewBag.leaders = employeeController.GetLeaders( );
-            ViewBag.allClientsId = clientController.GetClients( );
+           
             // ViewBag.cedulaClienteFK = new SelectList(db.Clientes, "cedulaPK", "nombreP");
             return View( );
         }
@@ -167,20 +155,8 @@ namespace ControlCalidad.Controllers
         // GET: Project/Edit/5
         public async Task<ActionResult> Edit( int? id )
         {
-            if( id == null )
-            {
-                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
-            }
-            Proyecto proyecto = await db.Proyectoes.FindAsync( id );
-            if( proyecto == null )
-            {
-                return HttpNotFound( );
-            }
-
-            ViewBag.leaders = employeeController.GetLeaders( );
-            ViewBag.allClientsId = clientController.GetClients( );
-            ViewBag.cedulaClienteFK = proyecto.cedulaClienteFK;
-            return View( proyecto );
+            
+            return View( );
         }
 
         // POST: Project/Edit/5
