@@ -97,28 +97,15 @@ namespace ControlCalidad.Controllers
         }
 
         // GET: Project
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            
-
             return View( );
-
         }
 
         // GET: Project/Details/5
-        public async Task<ActionResult> Details( int? id )
+        public ActionResult Details( int? id )
         {
-            if( id == null )
-            {
-                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
-            }
-            Proyecto proyecto = await db.Proyectoes.FindAsync( id );
-            if( proyecto == null )
-            {
-                return HttpNotFound( );
-            }
-            ViewBag.projectLeader = GetLeaderName( id );
-            return View( proyecto );
+            return View();
         }
 
         // GET: Project/Create
@@ -153,7 +140,7 @@ namespace ControlCalidad.Controllers
         }
 
         // GET: Project/Edit/5
-        public async Task<ActionResult> Edit( int? id )
+        public ActionResult Edit( int? id )
         {
             
             return View( );
@@ -200,28 +187,16 @@ namespace ControlCalidad.Controllers
 
 
         // GET: Project/Delete/5
-        public async Task<ActionResult> Delete( int? id )
+        public ActionResult Delete( int? id )
         {
-            if( id == null )
-            {
-                return new HttpStatusCodeResult( HttpStatusCode.BadRequest );
-            }
-            Proyecto proyecto = await db.Proyectoes.FindAsync( id );
-            if( proyecto == null )
-            {
-                return HttpNotFound( );
-            }
-            return View( proyecto );
+            return View();
         }
 
         // POST: Project/Delete/5
         [HttpPost, ActionName( "Delete" )]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed( int id )
+        public ActionResult DeleteConfirmed( int id )
         {
-            Proyecto proyecto = await db.Proyectoes.FindAsync( id );
-            db.Proyectoes.Remove( proyecto );
-            await db.SaveChangesAsync( );
             return RedirectToAction( "Index" );
         }
 
@@ -248,9 +223,6 @@ namespace ControlCalidad.Controllers
         //<return>  : Redirect to Index,where the project appears
         public ActionResult RemoveProject( int id )
         {
-            Proyecto project = db.Proyectoes.Find( id );
-            db.Proyectoes.Remove( project );
-            db.SaveChanges( );
             return RedirectToAction( "Index" );
         }
 
@@ -259,11 +231,7 @@ namespace ControlCalidad.Controllers
         //<return>  : projectStatus,the status of the project
         public string activeProject(string id )
         {
-            string status = "SELECT	P.estado " +
-                "FROM ControlCalidad.Proyecto P " +
-                "WHERE P.idPk = " + id + ";";
-            List<string> projectStatus = db.Database.SqlQuery<string>( status ).ToList( );
-            return projectStatus[ 0 ];
+            return "Cancelado";
         }
 
         //<summary> : Validates if a mail exist in the database

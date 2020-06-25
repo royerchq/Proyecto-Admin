@@ -4,15 +4,13 @@
         ViewBag.Title = "Details";
     }
 *@
-
-
 @{
 
-    string leader = ViewBag.projectLeader;
+    /*string leader = ViewBag.projectLeader;
     string startDate = Model.fechaInicio.ToShortDateString();
-    string clientName = Model.Cliente.nombreP + " " + Model.Cliente.apellido1;
+    string clientName = Model.Cliente.nombreP + " " + Model.Cliente.apellido1;*/
 
-    <h3 class="text-grey"> @Html.DisplayFor( model => model.nombre ) </h3>
+    <h3 class="text-grey"> Proyecto 1 </h3>
     <div class="margin-b1">
         <hr />
     </div>
@@ -21,7 +19,7 @@
             <div class="col s6 offset-s3">
                 <div class="card hoverable">
                     <nav>
-                        <div class="nav-wrapper black">
+                        <div class="nav-wrapper blue draken-3">
                             <p class="col s4"> Quality Expert S.A</p>
                         </div>
                     </nav>
@@ -29,63 +27,63 @@
                         <div class="row">
 
                             <div class="hide">
-                                <input id="idProject" type="text" value="@Model.idPK" />
+                                <input id="idProject" type="text" value="1" />
                             </div>
 
                             <div class="col s12 margin-b1">
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">person</i>
                                     <span class="text-turq"> Nombre del cliente </span>
-                                    : @Html.DisplayName( clientName )
+                                    : Roger Chacon
                                 </p>
                             </div>
                             <div class="col s12 margin-b1">
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">person</i>
                                     <span class="text-turq"> Lider del proyecto </span>
-                                    : @Html.DisplayName( leader )
+                                    : Sergio Ortega
                                 </p>
                             </div>
                             <div class="col s12 margin-b1">
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">assignment</i>
                                     <span class="text-turq"> Objetivo </span>
-                                    : @Html.DisplayFor( model => model.objetivo )
+                                    : Hacer pruebas exitosas
                                 </p>
                             </div>
                             <div class="col s12 margin-b1">
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">date_range</i>
                                     <span class="text-turq">Fecha de inicio</span>
-                                    : @Html.Name( startDate )
+                                    : 12/12/2019
                                 </p>
                             </div>
                             <div class="col s12 margin-b1">
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">date_range</i>
                                     <span class="text-turq">Fecha de finalizacion</span>
-                                    : @Html.DisplayFor( model => model.fechaFin )
+                                    : 12/12/2020
                                 </p>
                             </div>
                             <div class="col s12 margin-b1">
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">info</i>
                                     <span class="text-turq">Estado</span>
-                                    : @Html.DisplayFor( model => model.estado )
+                                    : En Progreso
                                 </p>
                             </div>
                             <div class="col s12 margin-b1">
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">hourglass_empty</i>
                                     <span class="text-turq">Duracion estimada</span>
-                                    : @Html.DisplayFor( model => model.duracionEstimada )
+                                    : 150 horas
                                 </p>
                             </div>
                             <div class="col s12 margin-b1">
                                 <p class="p-size">
                                     <i class="material-icons left text-grey">hourglass_full</i>
                                     <span class="text-turq">Duracion real</span>
-                                    : @Html.DisplayFor( model => model.duracionReal )
+                                    : TBD
                                 </p>
                             </div>
 
@@ -93,7 +91,7 @@
                         <div class="card-action center">
 
                             <a id="delete-btn" class="margin-r waves-effect btn red accent-4 red-hover modal-trigger" href="#modalProject">Borrar</a>
-                            @Html.ActionLink("Editar", "Edit", new { id = Model.idPK }, new
+                            @Html.ActionLink("Editar", "Edit", new { id = 1 }, new
                        {
                            @class = "margin-l waves-effect waves-light btn turq", @id = "edit-btn"
                        })
@@ -116,7 +114,7 @@
         <div class="row">
             <div class="">
                 <nav>
-                    <div class="nav-wrapper black">
+                    <div class="nav-wrapper blue draken-3">
                         <p class="col s4 offset-s5">Quality Expert S.A</p>
                     </div>
                 </nav>
@@ -129,7 +127,7 @@
                     <i class="material-icons medium red-text text-darken-4">warning</i>
                 </div>
                 <div class="s8">
-                    <h5>Está seguro que desea <span class="red-text text-darken-4 "> borrar </span> el proyecto  @Model.nombre ?</h5>
+                    <h5>Está seguro que desea <span class="red-text text-darken-4 "> borrar </span> el proyecto Proyecto 1 ?</h5>
                 </div>
                 <div class="left">
                     <span class="text-error" id="activeError"></span>
@@ -161,7 +159,7 @@
             <div class="modal-footer">
                 <a class="modal-close btn red-hover  red accent-4 white-text">Cancelar</a>
 
-                <a onclick="removeProject()" class="waves-effect waves-effect waves-light btn turq">Aceptar</a>
+                <a onclick="removeProject(1)" class="waves-effect waves-effect waves-light btn turq">Aceptar</a>
 
             </div>
         </div>
@@ -172,6 +170,7 @@
 
 @{
 
+/*
     if( User.IsInRole( "Lider" ) || User.IsInRole( "Tester" ) || User.IsInRole( "Cliente" ) )
     {
         <script>
@@ -179,4 +178,5 @@
             document.getElementById("edit-btn").classList.add("hide");
         </script>
     }
+    */
 }

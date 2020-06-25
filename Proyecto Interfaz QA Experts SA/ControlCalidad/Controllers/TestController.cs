@@ -16,12 +16,9 @@ namespace ControlCalidad.Controllers
         private QASystemEntities db = new QASystemEntities();
 
         // GET: Test
-        public async Task<ActionResult> Index(int? id, int? projectId)
+        public ActionResult Index(int? id, int? projectId)
         {
-            
                 return View();
-           
-            
         }
 
         // GET: Test/Details/5

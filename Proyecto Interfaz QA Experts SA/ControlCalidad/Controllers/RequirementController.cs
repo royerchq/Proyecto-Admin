@@ -28,8 +28,6 @@ namespace ControlCalidad.Controllers
         //<return>  : Redirect to Index View
         public ActionResult Index( int? projectId, string idTester)
         {
-           
-            
             return View( );
         }
 
@@ -65,9 +63,6 @@ namespace ControlCalidad.Controllers
         //<return>  : Redirect to Create view
         public ActionResult Create(int? projectId )
         {
-            ViewBag.id_proyectoFK = new SelectList( db.Proyectoes , "idPK" , "nombre" );
-            ViewBag.projectId = projectId;
-            ViewBag.testers = getTesters(projectId);
             return View( );
         }
 
